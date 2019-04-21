@@ -1,0 +1,17 @@
+C:\Users\peter\source\repos\DataStructures\TestDataStructure\bin\Debug\netcoreapp2.1\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+C:\Users\peter\source\repos\DataStructures\TestDataStructure\bin\Debug\netcoreapp2.1\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+C:\Users\peter\source\repos\DataStructures\TestDataStructure\bin\Debug\netcoreapp2.1\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+C:\Users\peter\source\repos\DataStructures\TestDataStructure\bin\Debug\netcoreapp2.1\TestDataStructure.deps.json
+C:\Users\peter\source\repos\DataStructures\TestDataStructure\bin\Debug\netcoreapp2.1\TestDataStructure.runtimeconfig.json
+C:\Users\peter\source\repos\DataStructures\TestDataStructure\bin\Debug\netcoreapp2.1\TestDataStructure.runtimeconfig.dev.json
+C:\Users\peter\source\repos\DataStructures\TestDataStructure\bin\Debug\netcoreapp2.1\TestDataStructure.dll
+C:\Users\peter\source\repos\DataStructures\TestDataStructure\bin\Debug\netcoreapp2.1\TestDataStructure.pdb
+C:\Users\peter\source\repos\DataStructures\TestDataStructure\bin\Debug\netcoreapp2.1\DataStructures.dll
+C:\Users\peter\source\repos\DataStructures\TestDataStructure\bin\Debug\netcoreapp2.1\DataStructures.pdb
+C:\Users\peter\source\repos\DataStructures\TestDataStructure\obj\Debug\netcoreapp2.1\TestDataStructure.csprojAssemblyReference.cache
+C:\Users\peter\source\repos\DataStructures\TestDataStructure\obj\Debug\netcoreapp2.1\TestDataStructure.csproj.CoreCompileInputs.cache
+C:\Users\peter\source\repos\DataStructures\TestDataStructure\obj\Debug\netcoreapp2.1\TestDataStructure.AssemblyInfoInputs.cache
+C:\Users\peter\source\repos\DataStructures\TestDataStructure\obj\Debug\netcoreapp2.1\TestDataStructure.AssemblyInfo.cs
+C:\Users\peter\source\repos\DataStructures\TestDataStructure\obj\Debug\netcoreapp2.1\TestDataStructure.csproj.CopyComplete
+C:\Users\peter\source\repos\DataStructures\TestDataStructure\obj\Debug\netcoreapp2.1\TestDataStructure.dll
+C:\Users\peter\source\repos\DataStructures\TestDataStructure\obj\Debug\netcoreapp2.1\TestDataStructure.pdb
