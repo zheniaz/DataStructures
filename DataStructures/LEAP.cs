@@ -6,6 +6,8 @@ namespace DataStructures
 {
     public class LEAP
     {
+        #region Find Max Subarray Sum
+
         public int[] MaxSubarraySum(int[] arr, int x)
         {
             if (arr.Length == 0 || arr.Length < x)
@@ -64,5 +66,57 @@ namespace DataStructures
             }
             return result;
         }
+
+        #endregion
+
+        #region FindMaxProductContinousSubSet
+
+        //I/P - {3,2,-1,4}
+        //O/P - {3,2}
+
+        //I/P - {1,2,3,4}
+        //O/P - {1,2,3,4}
+
+        //I/P - {-2,4,5,-3}
+        //O/P - {-2,4,5,-3}
+
+        //Continous SubSet:
+
+        //{3,2}        =    3 * 2 = 6
+        //{3,2,-1}     =    3 * 2 * -1 = -6
+        //{3,2,-1,4}   =    3 * 2 * -1 * 4 = -24
+        //{2,-1}        =    -2
+        //{2,-1,4}       =    -8 
+
+        //Not Continous SubSet:
+        //{3,4}
+
+        public int[] FindMaxProductContinousSubSet(int[] input)
+        {
+            int[] maxProductSubSet = null;
+            int multiplyResult = 1;
+            List<int> subSet = new List<int>();
+
+            for (int i = 0; i < input.Length - 1; i++)
+            {
+                subSet.Add(input[i]);
+                int temp = input[i];
+                
+                for (int j = i + 1; j < input.Length; j++)
+                {
+                    subSet.Add(input[j]);
+                    temp *= input[j];
+                    if (temp > multiplyResult)
+                    {
+                        multiplyResult = temp;
+                        maxProductSubSet = subSet.ToArray();
+                    }
+                }
+                subSet = new List<int>();
+            }
+            return maxProductSubSet;
+        }
+
+        #endregion
     }
 }
