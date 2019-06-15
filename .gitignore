@@ -4,3 +4,5 @@
 
 /.vs/DataStructures/v15
 /.vs
+bin/
+obj/

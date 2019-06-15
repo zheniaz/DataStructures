@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace DataStructures
@@ -27,22 +28,20 @@ namespace DataStructures
 
         public bool CheckPermutation(string s, string t)
         {
-            if (s.Length != t.Length)
+            if (s.Length != t.Length || s == "" || t == "")
                 return false;
 
             int[] letters = new int[128];
-            char[] charSet = s.ToCharArray();
 
-            for (int i = 0; i < charSet.Length; i++)
+            for (int i = 0; i < s.Length; i++)
             {
-                letters[charSet[i]]++;
+                letters[s[i]]++;
             }
 
             for (int i = 0; i < t.Length; i++)
             {
                 letters[t[i]]--;
-                if (letters[t[i]] < 0)
-                    return false;
+                if (letters[t[i]] < 0) return false;
             }
             return true;
         }
@@ -187,10 +186,14 @@ namespace DataStructures
 
         #endregion
 
-        #region Sorting Region
+        // 2 Tasks From My Interviews
 
-        static int[] Sort(int[] arr)
+        #region 2..1 Sorting Region
+
+        public int[] Sort(int[] arr)
         {
+            if (arr == null) return null;
+            if (arr.Length == 0) return null;
             for (int i = 0; i < arr.Length - 1; i++)
             {
                 for (int j = i + 1; j < arr.Length; j++)
@@ -206,7 +209,7 @@ namespace DataStructures
             return arr;
         }
 
-        static int[] SortSort(int[] arr)
+        public int[] SortSubArrays(int[] arr)
         {
             arr = Sort(arr);
             for (int i = 0; i < arr.Length - 1; i++)
@@ -222,6 +225,68 @@ namespace DataStructures
                 }
             }
             return arr;
+        }
+
+        #endregion
+
+        #region 2..2 Remove Duplicates From Each Substring in String
+
+        public string RemoveDupsFromSubstrings(string str)
+        {
+            if (str == null) return null;
+            if (str.Length == 1 || str == "") return str;
+            if (!str.All(Char.IsLetter)) return null;
+            
+            StringBuilder stringBuilder = new StringBuilder();
+            char current = str[0];
+            char next;
+            stringBuilder.Append(current);
+            for (int i = 0; i < str.Length - 1; i++)
+            {
+                current = str[i];
+                next = str[i + 1];
+                if (current != next)
+                {
+                    stringBuilder.Append(next);
+                }
+            }
+            return stringBuilder.ToString();
+        }
+
+        #endregion
+
+        #region 2..3 Reverse Words in string
+
+        public string ReverseWordsInString(string str)
+        {
+            if (str == null) throw new NullReferenceException();
+            if (str == "" || str.Length == 1) return str;
+            StringBuilder sb = new StringBuilder();
+            List<string> words = new List<string>();
+
+            for (int i = 0; i < str.Length; i++)
+            {
+                char item = str[i];
+                if(item != ' ')
+                {
+                    sb.Append(item);
+                }
+                else
+                {
+                    words.Add(sb.ToString());
+                    sb.Clear();
+                }
+            }
+            words.Add(sb.ToString());
+            sb.Clear();
+
+            for (int i = words.Count - 1; i >= 0; i--)
+            {
+                sb.Append(words[i]);
+                if(i != 0) sb.Append(' ');
+            }
+
+            return sb.ToString();
         }
 
         #endregion

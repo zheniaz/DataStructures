@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataStructures.Models;
+using System;
 using System.Collections.Generic;
 
 namespace DataStructures
@@ -115,19 +116,6 @@ namespace DataStructures
             ll.AddLast(root);
             SetLinkedLists(root.left, lists, ++level);
             SetLinkedLists(root.right, lists, ++level);
-        }
-    }
-
-
-
-    public class Tree
-    {
-        public int data;
-        public Tree left;
-        public Tree right;
-        public Tree(int data)
-        {
-            this.data = data;
         }
     }
 }

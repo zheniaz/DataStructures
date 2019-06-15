@@ -44,5 +44,28 @@ namespace DataStructures
             }
             return temp;
         }
+
+        #region 4.2 Minimal Tree
+
+        public Node MinimalTree(int[] arr)
+        {
+            if (arr == null || arr.Length == 0)
+            {
+                return null;
+            }
+            return MinimalTree(arr, 0, arr.Length);
+        }
+
+        public Node MinimalTree(int[] arr, int min, int max)
+        {
+            if (max < min) return null;
+            int mid = (min + max) / 2;
+            Node node = new Node(mid);
+            node.left = MinimalTree(arr, min, mid - 1);
+            node.right = MinimalTree(arr, mid + 1, max);
+            return node;
+        }
+
+        #endregion
     }
 }
