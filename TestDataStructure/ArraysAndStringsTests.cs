@@ -1,5 +1,6 @@
 using DataStructures;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections;
 using System.Linq;
 using System.Text;
@@ -57,7 +58,7 @@ namespace TestDataStructure
             string s = "";
             string t = "";
             bool result = _arraysAndStrings.CheckPermutation(s, t);
-            Assert.AreEqual(result, false);
+            Assert.IsTrue(result);
         }
 
         #endregion
@@ -99,13 +100,23 @@ namespace TestDataStructure
             bool result = _arraysAndStrings.IsPalindrom(palindrom);
             Assert.IsTrue(result);
         }
+
         [TestMethod]
         public void IsPalindromTest6()
         {
             string palindrom = "";
-            bool result = _arraysAndStrings.IsPalindrom(palindrom);
-            Assert.IsTrue(result);
+            var exception = Assert.ThrowsException<Exception>(() => _arraysAndStrings.IsPalindrom(palindrom));
+            Assert.IsTrue(exception.GetType() == typeof(Exception));
         }
+
+        [TestMethod]
+        public void IsPalindromHasNullString()
+        {
+            string palindrom = null;
+            var exception = Assert.ThrowsException<NullReferenceException>(() => _arraysAndStrings.IsPalindrom(palindrom));
+            Assert.IsTrue(exception.GetType() == typeof(NullReferenceException));
+        }
+
         [TestMethod]
         public void IsNotPalindromTest1()
         {
@@ -113,6 +124,7 @@ namespace TestDataStructure
             bool result = _arraysAndStrings.IsPalindrom(palindrom);
             Assert.IsFalse(result);
         }
+
         [TestMethod]
         public void IsNotPalindromTest2()
         {
@@ -120,6 +132,7 @@ namespace TestDataStructure
             bool result = _arraysAndStrings.IsPalindrom(palindrom);
             Assert.IsFalse(result);
         }
+
         [TestMethod]
         public void IsNotPalindromTest3()
         {
@@ -149,6 +162,14 @@ namespace TestDataStructure
         }
 
         [TestMethod]
+        public void IsOneAwayTest21()
+        {
+            string first = "pale", second = "palse";
+            bool result = _arraysAndStrings.OneEditAway(first, second);
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
         public void IsOneAwayTest3()
         {
             string first = "pale", second = "bale";
@@ -164,6 +185,22 @@ namespace TestDataStructure
             Assert.IsFalse(result);
         }
 
+        [TestMethod]
+        public void TwiceEditTest()
+        {
+            string first = "pale", second = "bqle";
+            bool result = _arraysAndStrings.OneEditAway(first, second);
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void TwiceEditTest2()
+        {
+            string first = "pale", second = "bqles";
+            bool result = _arraysAndStrings.OneEditAway(first, second);
+            Assert.IsFalse(result);
+        }
+
         #endregion
 
         #region 1.6 Compression
@@ -171,9 +208,45 @@ namespace TestDataStructure
         [TestMethod]
         public void StringCompressionTest1()
         {
-            string str = "aabbcca";
-            string expected = "a2b2c2a1";
-            string result = _arraysAndStrings.StringComperission(str);
+            string str = "aabcccccaaa";
+            string expected = "a2b1c5a3";
+            string result = _arraysAndStrings.StringCompression(str);
+            Assert.AreEqual(result, expected);
+        }
+
+        [TestMethod]
+        public void StringCompressionTest2()
+        {
+            string str = "abc";
+            string expected = "abc";
+            string result = _arraysAndStrings.StringCompression(str);
+            Assert.AreEqual(result, expected);
+        }
+
+        [TestMethod]
+        public void StringCompressionTest3()
+        {
+            string str = "aaa";
+            string expected = "a3";
+            string result = _arraysAndStrings.StringCompression(str);
+            Assert.AreEqual(result, expected);
+        }
+
+        [TestMethod]
+        public void StringCompressionTest4()
+        {
+            string str = "aaac";
+            string expected = "a3c1";
+            string result = _arraysAndStrings.StringCompression(str);
+            Assert.AreEqual(result, expected);
+        }
+
+        [TestMethod]
+        public void StringCompressionTest5()
+        {
+            string str = "accc";
+            string expected = "a1c3";
+            string result = _arraysAndStrings.StringCompression(str);
             Assert.AreEqual(result, expected);
         }
 
@@ -199,9 +272,27 @@ namespace TestDataStructure
             Assert.IsFalse(result);
         }
 
+        [TestMethod]
+        public void IsRotationTest3()
+        {
+            string s1 = "waterbottle";
+            string s2 = "erbottlewat";
+            bool result = _arraysAndStrings.IsRotation(s1, s2);
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void IsRotationTest4()
+        {
+            string s1 = "abc";
+            string s2 = "ab";
+            bool result = _arraysAndStrings.IsRotation(s1, s2);
+            Assert.IsFalse(result);
+        }
+
         #endregion
 
-        #region 2..1 Sorting Region
+        #region 1..1 Sorting Region
 
         [TestMethod]
         public void SortTest1()
@@ -312,7 +403,7 @@ namespace TestDataStructure
 
         #endregion
 
-        #region 2..2 Remove Duplicates From Each Substring in String
+        #region 1..2 Remove Duplicates From Each Substring in String
 
         [TestMethod]
         public void RemoveDupsTestSuccess1()
@@ -324,20 +415,19 @@ namespace TestDataStructure
         }
 
         [TestMethod]
-        public void RemoveDupsTestSuccess2()
+        public void RemoveDupsEmptyString()
         {
-            string str = "";
-            string expected = "";
-            var result = _arraysAndStrings.RemoveDupsFromSubstrings(str);
-            Assert.AreEqual(expected, result);
+            string palindrom = "";
+            var exception = Assert.ThrowsException<Exception>(() => _arraysAndStrings.RemoveDupsFromSubstrings(palindrom));
+            Assert.IsTrue(exception.GetType() == typeof(Exception));
         }
 
         [TestMethod]
-        public void RemoveDupsTestSuccess3()
+        public void RemoveDupsNullString()
         {
-            string str = null;
-            var result = _arraysAndStrings.RemoveDupsFromSubstrings(str);
-            Assert.IsNull(result);
+            string palindrom = null;
+            var exception = Assert.ThrowsException<NullReferenceException>(() => _arraysAndStrings.RemoveDupsFromSubstrings(palindrom));
+            Assert.IsTrue(exception.GetType() == typeof(NullReferenceException));
         }
 
         [TestMethod]
@@ -359,12 +449,11 @@ namespace TestDataStructure
         }
 
         [TestMethod]
-        public void RemoveDupsTestSuccess6()
+        public void RemoveDupsNonAlphabetChar()
         {
             string str = "a-3[";
-            string expected = null;
-            var result = _arraysAndStrings.RemoveDupsFromSubstrings(str);
-            Assert.AreEqual(expected, result);
+            var exception = Assert.ThrowsException<Exception>(() => _arraysAndStrings.RemoveDupsFromSubstrings(str));
+            Assert.IsTrue(exception.GetType() == typeof(Exception));
         }
 
         [TestMethod]
@@ -396,14 +485,65 @@ namespace TestDataStructure
 
         #endregion
 
-        #region 2..3 Reverse Words in string
+        #region 1..3 Reverse Words in string
 
         [TestMethod]
-        public void ReverseWordsTest1()
+        public void ReverseWordsCorrectSentence()
         {
-            string str = "This is a test";
+            string arrange = "This is a test";
             string expected = "test a is This";
-            var result = _arraysAndStrings.ReverseWordsInString(str);
+            var result = _arraysAndStrings.ReverseWordsInString(arrange);
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestMethod]
+        public void ReverseWordsStringWithSpaces()
+        {
+            string arrange = "  This is a test  ";
+            string expected = "test a is This";
+            var result = _arraysAndStrings.ReverseWordsInString(arrange);
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestMethod]
+        public void ReverseWordsStringWithSpacesBetweenWords()
+        {
+            string arrange = "  This   is    a     test  ";
+            string expected = "test a is This";
+            var result = _arraysAndStrings.ReverseWordsInString(arrange);
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestMethod]
+        public void ReverseWordsNullString()
+        {
+            string arrange = null;
+            var exception = Assert.ThrowsException<NullReferenceException>(() => _arraysAndStrings.IsPalindrom(arrange));
+            Assert.IsTrue(exception.GetType() == typeof(NullReferenceException));
+        }
+
+        #endregion
+
+        #region 1..4 Reverse Substrings
+
+        [TestMethod]
+        public void ReverseSubstringTest()
+        {
+            string str = "abc qwer";
+            string expected = "cba rewq";
+            var result = _arraysAndStrings.ReverseSubstrings(str);
+            Assert.AreEqual(expected, result);
+        }
+        #endregion
+
+        #region 1..5 Reverse String Region
+
+        [TestMethod]
+        public void ReverseStringTest()
+        {
+            string str = "abc";
+            string expected = "cba";
+            var result = _arraysAndStrings.ReverseString(str).ToString();
             Assert.AreEqual(expected, result);
         }
 

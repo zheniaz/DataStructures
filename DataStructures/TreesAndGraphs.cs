@@ -14,14 +14,14 @@ namespace DataStructures
             {
                 return null;
             }
-            return MinimalTree(arr, 0, arr.Length);
+            return MinimalTree(arr, 0, arr.Length - 1);
         }
 
         public Node MinimalTree(int[] arr, int min, int max)
         {
             if (max < min) return null;
             int mid = (min + max) / 2;
-            Node node = new Node(mid);
+            Node node = new Node(arr[mid]);
             node.left = MinimalTree(arr, min, mid - 1);
             node.right = MinimalTree(arr, mid + 1, max);
             return node;
@@ -78,27 +78,27 @@ namespace DataStructures
         //    return (MatchTree(t.left, s.left) && MatchTree(t.right, s.right));
         //}
 
-        public bool ContainsTree(Node t, Node s)
+        public bool ContainsSubTree(Node n1, Node n2)
         {
-            if (s == null) return true;
-            return SubTree(t, s);
+            if (n2 == null) return true;
+            return SubTree(n1, n2);
         }
 
-        public bool SubTree(Node t, Node s)
+        public bool SubTree(Node n1, Node n2)
         {
-            if (t == null) return false;
-            if (t.data == s.data && MatchTree(t, s)) return true;
-            return SubTree(t.left, s) || SubTree(t.right, s);
+            if (n1 == null) return false;
+            if (n1.data == n2.data && MatchTree(n1, n2)) return true;
+            return SubTree(n1.left, n2) || SubTree(n1.right, n2);
         }
 
-        public bool MatchTree(Node t, Node s)
+        public bool MatchTree(Node n1, Node n2)
         {
-            if (t == null && s == null) return true;
-            if (t == null || s == null) return false;
-            if (t.data != s.data) return false;
-            return MatchTree(s.left, t.left) && MatchTree(s.right, t.right);
+            if (n1 == null && n2 == null) return true;
+            if (n1 == null || n2 == null) return false;
+            if (n1.data != n2.data) return false;
+            return MatchTree(n1.left, n2.left) && MatchTree(n1.right, n2.right);
         }
-        
+
         #endregion
 
         #region 4..1 Check if two Trees have the same structure
@@ -114,7 +114,21 @@ namespace DataStructures
 
         #region 4..2 Binary Search 
 
+        public int? BinarySearch(int[] arr, int x)
+        {
+            if (arr == null || arr.Length == 0) return null;
+            if (arr.Length == 1) return arr[0];
+            return BinarySearch(arr, 0, arr.Length, x);
+        }
 
+        public int? BinarySearch(int[] arr, int start, int end, int x)
+        {
+            if (start > end) return null;
+            int mid = (start + end) / 2;
+            if (arr[mid] == x) return mid;
+            return (x < arr[mid]) ? BinarySearch(arr, start, mid - 1, x)
+                             : BinarySearch(arr, mid + 1, end, x);
+        }
 
         #endregion
     }
