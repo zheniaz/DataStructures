@@ -69,6 +69,15 @@ namespace DataStructures
             }
         }
 
+        public Node GetKthNode(Node node, int n)
+        {
+            while (n-- != 0 && node != null)
+            {
+                node = node.next;
+            }
+            return node;
+        }
+
         #region 2.1 Remove Dups Region
 
         public Node RemoveDups(Node node)
@@ -272,6 +281,30 @@ namespace DataStructures
                 back = back.next;
             }
             return true;
+        }
+
+        #endregion
+
+        #region 2.7 Intersection
+
+        public Node FindIntersection(Node n1, Node n2)
+        {
+            if (n1 == null || n2 == null) return null;
+
+            if (n1.Tail != n2.Tail) return null;
+
+            Node shorter = n1.Size < n2.Size ? n1 : n2;
+            Node longer = n1.Size < n2.Size ? n2 : n1;
+
+            longer = GetKthNode(longer, longer.Size - shorter.Size);
+
+            while(shorter != longer)
+            {
+                shorter = shorter.next;
+                longer = longer.next;
+            }
+
+            return longer;
         }
 
         #endregion

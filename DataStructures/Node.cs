@@ -10,12 +10,9 @@ namespace DataStructures
         public Node previous;
         public Node left;
         public Node right;
-        public Node last
-        {
-            set { value = SetLastNode(); }
-        }
+        public Node Tail => SetLastNode();
         public int data;
-        public int size { set { value = Size(); } }
+        public int Size => SizeOfNode();
 
         public Node(int data)
         {
@@ -58,7 +55,7 @@ namespace DataStructures
             return head;
         }
 
-        private int Size()
+        private int SizeOfNode()
         {
             int count = 1;
             Node temp = next;

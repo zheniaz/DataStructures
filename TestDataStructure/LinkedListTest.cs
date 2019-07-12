@@ -171,7 +171,7 @@ namespace TestDataStructure
             bool result = ll.IsLinkedListPalindrome(ll.head);
             Assert.AreEqual(result, expected);
         }
-                
+
         [TestMethod]
         public void IsPalindrome7()
         {
@@ -225,6 +225,23 @@ namespace TestDataStructure
             bool expected = true;
             bool result = ll.IsLLPalindrome(ll.head);
             Assert.AreEqual(result, expected);
+        }
+
+        #endregion
+
+        #region 2.7 Intersection
+
+        [TestMethod]
+        public void IntersectionTest()
+        {
+            Node n1 = CreateSortedNode(4);
+            Node n2 = new Node(0);
+            n2.next = n1.next.next;
+
+            Node expected = n1.next.next;
+            Node actual = ll.FindIntersection(n1, n2);
+
+            Assert.AreEqual(expected, actual);
         }
 
         #endregion
@@ -346,7 +363,20 @@ namespace TestDataStructure
             Node current = new Node(++i); ;
             Node node = current;
             while (i < 6)
-            { 
+            {
+                current.next = new Node(++i);
+                current = current.next;
+            }
+            return node;
+        }
+
+        private Node CreateSortedNode(int size)
+        {
+            int i = 0;
+            Node current = new Node(++i); ;
+            Node node = current;
+            while (--size != 0)
+            {
                 current.next = new Node(++i);
                 current = current.next;
             }
@@ -369,7 +399,7 @@ namespace TestDataStructure
 
         private bool IsEqualNodes(Node n1, Node n2)
         {
-            while(n1 != null && n2 != null)
+            while (n1 != null && n2 != null)
             {
                 if (n1 == null || n2 == null || n1.data != n2.data) return false;
                 n1 = n1.next;
