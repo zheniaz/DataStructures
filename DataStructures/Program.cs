@@ -12,13 +12,13 @@ namespace DataStructures
             Console.WriteLine();
 
             LinkedList ll = new LinkedList();
-            ll.Add(3);
-            ll.Add(5);
-            ll.Add(8);
-            ll.Add(5);
-            ll.Add(10);
-            ll.Add(2);
-            ll.Add(1);
+            ll.AddToTail(3);
+            ll.AddToTail(5);
+            ll.AddToTail(8);
+            ll.AddToTail(5);
+            ll.AddToTail(10);
+            ll.AddToTail(2);
+            ll.AddToTail(1);
             ShowLL(ll.head);
             ShowLL(ll.Partition(ll.head, 5));
 

@@ -16,28 +16,9 @@ namespace TestDataStructure
         [TestMethod]
         public void RomoveDupsTest1()
         {
-            ll.Add(1);
-            ll.Add(2);
-            ll.Add(2);
-            ll.Add(3);
-
-            Node result = ll.RemoveDuplicates(ll.head);
-            bool isUnique = true;
-            HashSet<int> hs = new HashSet<int>();
-            while(result != null)
-            {
-                if (hs.Contains(result.data))
-                {
-                    isUnique = false;
-                    break;
-                }
-                else
-                {
-                    hs.Add(result.data);
-                }
-                result = result.next;
-            }
-            Assert.IsTrue(isUnique);
+            LinkedList linkedList = CreateLLWithDuplicates();
+            Node result = ll.RemoveDuplicates(linkedList.head);
+            Assert.IsTrue(IsUniqueNode(result));
         }
 
         #endregion
@@ -49,8 +30,18 @@ namespace TestDataStructure
         {
             ll = CreateSortedList();
             int result = ll.KthItemToLast(ll.head, 1);
-            int expected = 5;
+            int expected = 6;
             Assert.AreEqual(expected, result);
+        }
+
+        #endregion
+
+        #region 2.3 Delete Middle Node
+
+        [TestMethod]
+        public void DeleteMiddleNodeTest()
+        {
+
         }
 
         #endregion
@@ -60,13 +51,13 @@ namespace TestDataStructure
         [TestMethod]
         public void LinkedListPartition()
         {
-            ll.Add(3);
-            ll.Add(5);
-            ll.Add(8);
-            ll.Add(5);
-            ll.Add(10);
-            ll.Add(2);
-            ll.Add(1);
+            ll.AddToTail(3);
+            ll.AddToTail(5);
+            ll.AddToTail(8);
+            ll.AddToTail(5);
+            ll.AddToTail(10);
+            ll.AddToTail(2);
+            ll.AddToTail(1);
         }
 
         #endregion
@@ -263,7 +254,7 @@ namespace TestDataStructure
         public void LoopDetection3()
         {
             ll = FillRundomValues();
-            ll.Add(123);
+            ll.AddToTail(123);
             Node expected = null;
             Node result = ll.LoopDetection(ll.head);
             Assert.AreEqual(expected, result);
@@ -285,42 +276,129 @@ namespace TestDataStructure
 
         #endregion
 
+        #region 2..1 The "Runner" Technique a1->a2->b1->b2 => a1->b1->a2->b2
+
+        [TestMethod]
+        public void RunnerTechniqueTest()
+        {
+            Node node = CreateSortedNode();
+            Node actual = ll.Runner(node);
+            Node expected = CreateSortedMixedNode();
+            Assert.IsTrue(IsEqualNodes(expected, actual));
+        }
+
+        #endregion
+
         #region Working Region
 
         private LinkedList FillRundomValues()
         {
             LinkedList list = new LinkedList();
-            list.Add(3);
-            list.Add(5);
-            list.Add(8);
-            list.Add(5);
-            list.Add(10);
-            list.Add(2);
-            list.Add(1);
+            list.AddToTail(3);
+            list.AddToTail(5);
+            list.AddToTail(8);
+            list.AddToTail(5);
+            list.AddToTail(10);
+            list.AddToTail(2);
+            list.AddToTail(1);
             return list;
         }
 
         private LinkedList CreatePalindrome()
         {
             LinkedList list = new LinkedList();
-            list.Add(3);
-            list.Add(5);
-            list.Add(8);
-            list.Add(5);
-            list.Add(3);
+            list.AddToTail(3);
+            list.AddToTail(5);
+            list.AddToTail(8);
+            list.AddToTail(5);
+            list.AddToTail(3);
             return list;
         }
 
         private LinkedList CreateSortedList()
         {
             LinkedList list = new LinkedList();
-            list.Add(1);
-            list.Add(2);
-            list.Add(3);
-            list.Add(4);
-            list.Add(5);
+            list.AddToTail(1);
+            list.AddToTail(2);
+            list.AddToTail(3);
+            list.AddToTail(4);
+            list.AddToTail(5);
+            list.AddToTail(6);
             return list;
         }
+
+        private LinkedList CreateLLWithDuplicates()
+        {
+            LinkedList list = new LinkedList();
+            list.AddToTail(1);
+            list.AddToTail(1);
+            list.AddToTail(3);
+            list.AddToTail(4);
+            list.AddToTail(4);
+            return list;
+        }
+
+        #region Working Region For Node
+
+        private Node CreateSortedNode()
+        {
+            int i = 0;
+            Node current = new Node(++i); ;
+            Node node = current;
+            while (i < 6)
+            { 
+                current.next = new Node(++i);
+                current = current.next;
+            }
+            return node;
+        }
+
+        private Node CreateSortedMixedNode()
+        {
+            int[] arr = { 1, 4, 1, 5, 2, 6 };
+            Node current = null;
+            Node node = current;
+
+            for (int i = 0; i < arr.Length; i++)
+            {
+                current = new Node(i);
+                current = current.next;
+            }
+            return node;
+        }
+
+        private bool IsEqualNodes(Node n1, Node n2)
+        {
+            while(n1 != null && n2 != null)
+            {
+                if (n1 == null || n2 == null || n1.data != n2.data) return false;
+                n1 = n1.next;
+                n2 = n2.next;
+            }
+            return true;
+        }
+
+        private bool IsUniqueNode(Node node)
+        {
+            bool isUnique = true;
+            HashSet<int> hs = new HashSet<int>();
+            while (node != null)
+            {
+                if (hs.Contains(node.data))
+                {
+                    isUnique = false;
+                    break;
+                }
+                else
+                {
+                    hs.Add(node.data);
+                }
+                node = node.next;
+            }
+            return isUnique;
+        }
+
+        #endregion
 
         #endregion
     }

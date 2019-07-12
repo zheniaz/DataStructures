@@ -10,7 +10,7 @@ namespace DataStructures
         public Node head;
         public Node tail;
 
-        public void Add(int data)
+        public void AddToTail(int data)
         {
             Node node = new Node(data);
             if (head != null)
@@ -22,6 +22,21 @@ namespace DataStructures
                 head = node;
             }
             tail = node;
+        }
+
+        public void AddToHead(int data)
+        {
+            Node node = new Node(data);
+            if (this.head == null)
+            {
+                head = node;
+                tail = node;
+            }
+            else if (this.head != null)
+            {
+                node.next = head;
+                head = node;
+            }
         }
 
         public void Remove(int data)
@@ -56,24 +71,24 @@ namespace DataStructures
 
         #region 2.1 Remove Dups Region
 
-        public void RemoveDups(Node node)
+        public Node RemoveDups(Node node)
         {
+            if (node == null) return node;
             HashSet<int> hs = new HashSet<int>();
             Node current = node;
-            Node previous = null;
-            while (current != null)
+            while (current.next != null)
             {
-                if (hs.Contains(current.data))
+                if (hs.Contains(current.next.data))
                 {
-                    previous.next = current.next;
+                    current.next = current.next.next;
                 }
                 else
                 {
                     hs.Add(current.data);
-                    previous = current;
                 }
                 current = current.next;
             }
+            return node;
         }
 
         public Node RemoveDuplicates(Node node)
@@ -105,19 +120,14 @@ namespace DataStructures
 
         public int KthItemToLast(Node node, int k)
         {
+            if (node == null || k < 1) return 0;
             Node current = ReverseNode(node);
-
             while (current != null)
             {
-                k--;
-                if (k == 0)
-                {
-                    return current.data;
-                }
-
-                current = current.next;
+                if (--k == 0) break;
+                else current = current.next;
             }
-            return -1;
+            return current.data;
         }
 
         public Node ReverseNode(Node node)
@@ -137,21 +147,15 @@ namespace DataStructures
             return current;
         }
 
-
-
         #endregion
 
         #region 2.3 Delete Middle Node
 
         public bool DeleteMiddleNode(Node n)
         {
-            if (n == null || n.next == null)
-            {
-                return false;
-            }
-            Node next = n.next;
-            n.data = next.data;
-            n.next = next.next;
+            if (n == null || n.next == null) return false;
+            n.data = n.next.next.data;
+            n.next = n.next.next;
             return true;
         }
 
@@ -214,7 +218,7 @@ namespace DataStructures
             Node reverse = Reverse(node);
             while (node != null)
             {
-                if(reverse.data != node.data)
+                if (reverse.data != node.data)
                 {
                     return false;
                 }
@@ -225,7 +229,7 @@ namespace DataStructures
 
         public Node Reverse(Node node)
         {
-            
+
             Node previous = null;
             Node current = node;
             Node next = node.next;
@@ -321,6 +325,39 @@ namespace DataStructures
                 }
             }
             return false;
+        }
+
+        #endregion
+
+        #region 2..1 The "Runner" Technique a1->a2->b1->b2 => a1->b1->a2->b2
+
+        public Node Runner(Node head)
+        {
+            Node fast = head;
+            Node slow = head;
+            while (fast != null)
+            {
+                fast = fast.next.next;
+                slow = slow.next;
+            }
+            fast = head;
+
+            Node current = new Node(fast.data);
+            current.next = new Node(slow.data);
+            Node result = current;
+            current = current.next;
+
+            while (slow.next != null)
+            {
+                slow = slow.next;
+                fast = fast.next;
+
+                Node fastNext = new Node(fast.data);
+                fastNext.next = new Node(slow.data);
+                current.next = fastNext;
+                current = current.next;
+            }
+            return result;
         }
 
         #endregion
