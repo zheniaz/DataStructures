@@ -12,7 +12,7 @@ namespace DataStructures
         public List<MyStack> listOfStackPlates = new List<MyStack>();
         public readonly int stackSize = 2;
 
-        #region Base functionality with resolved Max Subarray Sum task (Pasha Miller task from LEAP)
+        #region Base functionality 
 
         public void Push(int data)
         {
@@ -36,7 +36,6 @@ namespace DataStructures
 
         public int? Pop()
         {
-
             int data;
             if (top != null)
             {
@@ -50,6 +49,19 @@ namespace DataStructures
             return data;
         }
 
+        public Node Peek()
+        {
+            if(this.top != null)
+            {
+                return this.top;
+            }
+            return null;
+        }
+
+        public bool IsEmpty()
+        {
+            return top == null;
+        }
 
         #endregion
 
@@ -131,6 +143,8 @@ namespace DataStructures
             return removed;
         }
 
+        #region 3..1 LEAP Max Subarray Sum task (Pasha Miller task from LEAP)
+
         public int[] MaxSubarraySum(int[] arr, int k)
         {
             MyQueue queue = new MyQueue();
@@ -156,6 +170,10 @@ namespace DataStructures
             return FromQueueToArray(maxQ);
         }
 
+        #endregion
+
+        #region Working Region
+
         private int[] FromQueueToArray(MyQueue q)
         {
             Node current = q.first;
@@ -167,7 +185,7 @@ namespace DataStructures
             }
             return result.ToArray();
         }
-
+    
 
         private int SumOfAllNodeItems(MyQueue q)
         {
@@ -192,6 +210,7 @@ namespace DataStructures
             }
             return result;
         }
-    }
 
+        #endregion
+    }
 }
