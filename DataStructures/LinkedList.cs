@@ -9,6 +9,7 @@ namespace DataStructures
     {
         public Node head;
         public Node tail;
+        public int Count { get { return this.GetCount(); } set { } }
 
         public void AddToTail(int data)
         {
@@ -20,6 +21,19 @@ namespace DataStructures
             else
             {
                 head = node;
+            }
+            tail = node;
+        }
+
+        public void AddNode(Node node)
+        {
+            if (head == null)
+            {
+                head = node;
+            }
+            else
+            {
+                tail.next = node;
             }
             tail = node;
         }
@@ -392,6 +406,23 @@ namespace DataStructures
             }
             return result;
         }
+
+        #endregion
+
+        #region Working Region
+
+        private int GetCount()
+        {
+            Node current = this.head;
+            int count = 0;
+            while(current != null)
+            {
+                ++count;
+                current = current.next;
+            }
+            return count;
+        }
+
 
         #endregion
     }

@@ -24,6 +24,24 @@ namespace TestDataStructure
 
         #endregion
 
+        #region 4.3 List Of Depths
+
+        [TestMethod]
+        public void ListOfDepthTest()
+        {
+            int[] arr = { 1, 2, 3, 4, 5, 6, 7 };
+            Node node = _treesAndGraphs.MinimalTree(arr);
+            List<LinkedList> result = _treesAndGraphs.ListOfDepths(node);
+
+            List<LinkedList> expected = CreateListOfLinkedListsFor_ListOfDepths();
+
+
+
+            Assert.IsTrue(IsListsOfDeptshAreEqual(expected, result));
+        }
+
+        #endregion
+
         #region 4.5 Check if BT is a BST
 
         [TestMethod]
@@ -122,6 +140,49 @@ namespace TestDataStructure
             if (n1.data != n2.data) return false;
             return CheckIsTheSameTree(n1.left, n2.left) && CheckIsTheSameTree(n1.right, n2.right);
         }
+
+        #region working region for 4.3 List Of Depths
+
+        private List<LinkedList> CreateListOfLinkedListsFor_ListOfDepths()
+        {
+            List<LinkedList> list = new List<LinkedList>();
+            LinkedList level1 = new LinkedList();
+            LinkedList level2 = new LinkedList();
+            LinkedList level3 = new LinkedList();
+            level1.AddToTail(4);
+            level2.AddToTail(2);
+            level2.AddToTail(6);
+            level3.AddToTail(1);
+            level3.AddToTail(3);
+            level3.AddToTail(5);
+            level3.AddToTail(7);
+            list.Add(level1);
+            list.Add(level2);
+            list.Add(level3);
+            return list;
+        }
+
+        private bool IsListsOfDeptshAreEqual(List<LinkedList> list1, List<LinkedList> list2)
+        {
+            if (list1.Count != list2.Count) return false;
+            for (int i = 0; i < list1.Count; i++)
+            {
+                if (list1[i].Count != list2[i].Count) return false;
+                Node node1 = list1[i].head;
+                Node node2 = list2[i].head;
+                while (node1 != null || node2 != null)
+                {
+                    if (node1.data != node2.data)
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        #endregion
+
         #endregion
     }
 }

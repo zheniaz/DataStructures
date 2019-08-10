@@ -548,5 +548,65 @@ namespace TestDataStructure
         }
 
         #endregion
+
+        #region 1..6
+
+        [TestMethod]
+        public void CountUniqueWordsTest1()
+        {
+            var result = _arraysAndStrings.CountUniqueWords(" a a a f d");
+            Assert.AreEqual(2, result);
+        }
+
+        [TestMethod]
+        public void CountUniqueWordsTest2()
+        {
+            var result = _arraysAndStrings.CountUniqueWords(" aasdf aasdf a f d");
+            Assert.AreEqual(3, result);
+        }
+
+        [TestMethod]
+        public void CountUniqueWordsTest3()
+        {
+            var result = _arraysAndStrings.CountUniqueWords("asdf");
+            Assert.AreEqual(1, result);
+        }
+
+        [TestMethod]
+        public void CountUniqueWordsTest4()
+        {
+            var result = _arraysAndStrings.CountUniqueWords("qwer wetr erty qwer e");
+            Assert.AreEqual(3, result);
+        }
+
+        [TestMethod]
+        public void CountUniqueWordsTest5()
+        {
+            var result = _arraysAndStrings.CountUniqueWords(null);
+            Assert.AreEqual(0, result);
+        }
+
+        [TestMethod]
+        public void CountUniqueWordsTest6()
+        {
+            var result = _arraysAndStrings.CountUniqueWords(" ");
+            Assert.AreEqual(0, result);
+        }
+
+        [TestMethod]
+        public void CountUniqueWordsTest7()
+        {
+            var result = _arraysAndStrings.CountUniqueWords("");
+            Assert.AreEqual(0, result);
+        }
+
+        [TestMethod]
+        public void CountUniqueWordsTest8()
+        {
+            var result = _arraysAndStrings.CountUniqueWords("b");
+            Assert.AreEqual(1, result);
+        }
+
+        #endregion
     }
 }

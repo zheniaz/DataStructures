@@ -275,7 +275,7 @@ namespace DataStructures
                     words.Add(sb.ToString());
                     sb.Clear();
                 }
-                else if(str[i] != ' ')
+                else if (str[i] != ' ')
                 {
                     sb.Append(str[i]);
                 }
@@ -341,6 +341,51 @@ namespace DataStructures
                 arr[arr.Length - 1 - i] = item;
             }
             return new string(arr);
+        }
+
+        #endregion
+
+        #region 1..6 Count unique Words in string
+
+        public int CountUniqueWords(string str)
+        {
+            if (str == null) return 0;
+            Hashtable words = new Hashtable();
+            str = str.Trim();
+            if (str == "") return 0;
+            StringBuilder sb = new StringBuilder();
+
+            for (int i = 0; i < str.Length; i++)
+            {
+                if (str[i] != ' ')
+                {
+                    sb.Append(str[i]);
+                }
+                if (str[i] == ' ' || i == str.Length - 1)
+                {
+                    string word = sb.ToString();
+                    if (!words.ContainsKey(word))
+                    {
+                        words.Add(word, 1);
+                    }
+                    else
+                    {
+                        int count = (int)words[word];
+                        words[word] = ++count;
+                    }
+                    sb.Clear();
+                }
+            }
+            int uniqueCount = 0;
+            var keyArr = words.Values;
+            foreach (var item in keyArr)
+            {
+                if ((int)item == 1)
+                {
+                    uniqueCount++;
+                }
+            }
+            return uniqueCount;
         }
 
         #endregion

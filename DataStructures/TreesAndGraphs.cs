@@ -29,6 +29,41 @@ namespace DataStructures
 
         #endregion
 
+        #region 4.3 List Of Depths
+
+        public List<LinkedList> ListOfDepths(Node node)
+        {
+            List<LinkedList> result = new List<LinkedList>();
+            LinkedList currentLevelNode = new LinkedList();
+            currentLevelNode.AddNode(node);
+            result.Add(currentLevelNode);
+            bool isHasChild = node.left != null || node.right != null ? true : false;
+            while (isHasChild)
+            {
+                LinkedList tempLinkedList = new LinkedList();
+                Node tempNode = currentLevelNode.head;
+                while (tempNode != null)
+                {
+                    if (tempNode.left != null) tempLinkedList.AddNode(tempNode.left);
+                    if (tempNode.right != null) tempLinkedList.AddNode(tempNode.right);
+                    tempNode = tempNode.next;
+                }
+                if (tempLinkedList.Count != 0)
+                {
+                    result.Add(tempLinkedList);
+                    currentLevelNode = tempLinkedList;
+                    isHasChild = tempLinkedList.Count != 0;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            return result;
+        }
+
+        #endregion
+
         #region 4.5 Check if BT is a BST
 
         public bool CheckIsBST(Node node)
@@ -54,49 +89,28 @@ namespace DataStructures
 
         #region 4.10 Check SubTree
 
-        //public bool ContainsSubTree(Node t, Node s)
-        //{
-        //    if (s == null) return true;
-        //    return SubTree(t, s);
-        //}
-
-        //public bool SubTree(Node t, Node s)
-        //{
-        //    if (t == null) return false;
-        //    if(t.data == s.data && MatchTree(t, s))
-        //    {
-        //        return true;
-        //    }
-        //    return (SubTree(t.left, s) || SubTree(t.right, s));
-        //}
-
-        //public bool MatchTree(Node t, Node s)
-        //{
-        //    if (t == null && s == null) return true;
-        //    if (t == null || s == null) return false;
-        //    if (t.data != s.data) return false;
-        //    return (MatchTree(t.left, s.left) && MatchTree(t.right, s.right));
-        //}
-
-        public bool ContainsSubTree(Node n1, Node n2)
+        public bool ContainsSubTree(Node t, Node s)
         {
-            if (n2 == null) return true;
-            return SubTree(n1, n2);
+            if (s == null) return true;
+            return SubTree(t, s);
         }
 
-        public bool SubTree(Node n1, Node n2)
+        public bool SubTree(Node t, Node s)
         {
-            if (n1 == null) return false;
-            if (n1.data == n2.data && MatchTree(n1, n2)) return true;
-            return SubTree(n1.left, n2) || SubTree(n1.right, n2);
+            if (t == null) return false;
+            if (t.data == s.data && MatchTree(t, s))
+            {
+                return true;
+            }
+            return (SubTree(t.left, s) || SubTree(t.right, s));
         }
 
-        public bool MatchTree(Node n1, Node n2)
+        public bool MatchTree(Node t, Node s)
         {
-            if (n1 == null && n2 == null) return true;
-            if (n1 == null || n2 == null) return false;
-            if (n1.data != n2.data) return false;
-            return MatchTree(n1.left, n2.left) && MatchTree(n1.right, n2.right);
+            if (t == null && s == null) return true;
+            if (t == null || s == null) return false;
+            if (t.data != s.data) return false;
+            return (MatchTree(t.left, s.left) && MatchTree(t.right, s.right));
         }
 
         #endregion
