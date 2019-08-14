@@ -31,33 +31,85 @@ namespace DataStructures
 
         #region 4.3 List Of Depths
 
+        
+        //public List<LinkedList> ListOfDepths(Node node)
+        //{
+        //    List<LinkedList> result = new List<LinkedList>();
+        //    LinkedList currentLevelNode = new LinkedList();
+        //    currentLevelNode.AddNode(node);
+        //    result.Add(currentLevelNode);
+        //    bool isHasChild = node.left != null || node.right != null ? true : false;
+        //    while (isHasChild)
+        //    {
+        //        LinkedList tempLinkedList = new LinkedList();
+        //        Node tempNode = currentLevelNode.head;
+        //        while (tempNode != null)
+        //        {
+        //            if (tempNode.left != null) tempLinkedList.AddNode(tempNode.left);
+        //            if (tempNode.right != null) tempLinkedList.AddNode(tempNode.right);
+        //            tempNode = tempNode.next;
+        //        }
+        //        if (tempLinkedList.Count != 0)
+        //        {
+        //            result.Add(tempLinkedList);
+        //            currentLevelNode = tempLinkedList;
+        //            isHasChild = tempLinkedList.Count != 0;
+        //        }
+        //        else
+        //        {
+        //            break;
+        //        }
+        //    }
+        //    return result;
+        //}
+
+        public List<LinkedList> ListOfBSTDepths(Node node)
+        {
+            if (node == null) throw new NullReferenceException();
+            List<LinkedList> result = new List<LinkedList>();
+            LinkedList currentLevel = new LinkedList();
+            currentLevel.AddNode(node);
+            result.Add(currentLevel);
+            while (currentLevel.head != null)
+            {
+                Node temp = currentLevel.head;
+                LinkedList next = new LinkedList();
+                while (temp != null)
+                {
+                    if (temp.left != null) next.AddNode(temp.left);
+                    if (temp.right != null) next.AddNode(temp.right);
+                    temp = temp.next;
+                }
+                if (next.Count != 0) result.Add(next);
+                currentLevel = next;
+            }
+            return result;
+        }
+
         public List<LinkedList> ListOfDepths(Node node)
         {
+            if (node == null) throw new NullReferenceException();
             List<LinkedList> result = new List<LinkedList>();
-            LinkedList currentLevelNode = new LinkedList();
-            currentLevelNode.AddNode(node);
-            result.Add(currentLevelNode);
-            bool isHasChild = node.left != null || node.right != null ? true : false;
-            while (isHasChild)
+            LinkedList currentLevel = new LinkedList();
+            currentLevel.AddNode(node);
+            result.Add(currentLevel);
+            Node[] nodes = currentLevel.head.kids;
+            currentLevel = new LinkedList();
+            
+            
+
+
+            while (nodes.Length != 0)
             {
-                LinkedList tempLinkedList = new LinkedList();
-                Node tempNode = currentLevelNode.head;
-                while (tempNode != null)
+                
+                List<Node> nextLevel = new List<Node>();
+                foreach (var item in nodes)
                 {
-                    if (tempNode.left != null) tempLinkedList.AddNode(tempNode.left);
-                    if (tempNode.right != null) tempLinkedList.AddNode(tempNode.right);
-                    tempNode = tempNode.next;
+                    currentLevel.AddNode(item);
+                    nextLevel.AddRange(item.kids);
                 }
-                if (tempLinkedList.Count != 0)
-                {
-                    result.Add(tempLinkedList);
-                    currentLevelNode = tempLinkedList;
-                    isHasChild = tempLinkedList.Count != 0;
-                }
-                else
-                {
-                    break;
-                }
+                if (nextLevel.Count != 0) result.Add(currentLevel);
+                nodes = nextLevel.ToArray();
             }
             return result;
         }

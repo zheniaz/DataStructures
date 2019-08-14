@@ -27,10 +27,23 @@ namespace TestDataStructure
         #region 4.3 List Of Depths
 
         [TestMethod]
-        public void ListOfDepthTest()
+        public void ListOfBSTDepthTest()
         {
             int[] arr = { 1, 2, 3, 4, 5, 6, 7 };
             Node node = _treesAndGraphs.MinimalTree(arr);
+            List<LinkedList> result = _treesAndGraphs.ListOfBSTDepths(node);
+
+            List<LinkedList> expected = CreateListOfLinkedListsFor_ListOfDepths();
+
+
+
+            Assert.IsTrue(IsListsOfDeptshAreEqual(expected, result));
+        }
+
+        [TestMethod]
+        public void ListOfDepthTest()
+        {
+            Node node = CreateNodeWithTwoLevelsKids();
             List<LinkedList> result = _treesAndGraphs.ListOfDepths(node);
 
             List<LinkedList> expected = CreateListOfLinkedListsFor_ListOfDepths();
@@ -141,6 +154,24 @@ namespace TestDataStructure
             return CheckIsTheSameTree(n1.left, n2.left) && CheckIsTheSameTree(n1.right, n2.right);
         }
 
+        private Node CreateNodeWithTwoLevelsKids()
+        {
+            Node node = new Node(1);
+            node.kids = AddKidsToNode();
+
+            for (int i = 0; i < 3; i++)
+            {
+                node.kids[i].kids = AddKidsToNode();
+            }
+            return node;
+        }
+
+        private Node[] AddKidsToNode()
+        {
+            Node[] nodes = { new Node(1), new Node(2), new Node(3) };
+            return nodes;
+        }
+
         #region working region for 4.3 List Of Depths
 
         private List<LinkedList> CreateListOfLinkedListsFor_ListOfDepths()
@@ -176,6 +207,8 @@ namespace TestDataStructure
                     {
                         return false;
                     }
+                    node1 = node1.next;
+                    node2 = node2.next;
                 }
             }
             return true;

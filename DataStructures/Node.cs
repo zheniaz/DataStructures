@@ -10,6 +10,7 @@ namespace DataStructures
         public Node previous;
         public Node left;
         public Node right;
+        public Node[] kids;
         public Node Tail => SetLastNode();
         public int data;
         public int Size => SizeOfNode();

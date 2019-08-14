@@ -607,6 +607,44 @@ namespace TestDataStructure
             Assert.AreEqual(1, result);
         }
 
+        [TestMethod]
+        public void CountUniqueWordsTest9()
+        {
+            var result = _arraysAndStrings.CountUniqueWords("b  c");
+            Assert.AreEqual(2, result);
+        }
+
+        [TestMethod]
+        public void CountUniqueWordsTest10()
+        {
+            var result = _arraysAndStrings.CountUniqueWords("b!  b");
+            Assert.AreEqual(0, result);
+        }
+
+        [TestMethod]
+        public void CountUniqueWordsTest11()
+        {
+            var result = _arraysAndStrings.CountUniqueWords("b!  b!");
+            Assert.AreEqual(0, result);
+        }
+
+        [TestMethod]
+        public void CountUniqueWordsTest12()
+        {
+            var result = _arraysAndStrings.CountUniqueWords("b!  b@");
+            Assert.AreEqual(0, result);
+        }
+
+        [TestMethod]
+        public void CountUniqueWordsFromTextFile()
+        {
+            string filePath = @"C:\Users\v-vinala\source\repos\DataStructures\DataStructures\uniqueWords.txt";
+            var result = _arraysAndStrings.CountUniqueWordsFromFile(filePath);
+            Assert.AreEqual(2, result);
+        }
+
+
+
         #endregion
     }
 }

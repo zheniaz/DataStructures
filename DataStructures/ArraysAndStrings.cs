@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -357,11 +358,16 @@ namespace DataStructures
 
             for (int i = 0; i < str.Length; i++)
             {
-                if (str[i] != ' ')
+                char c = str[i];
+                if (c != ' ')
                 {
-                    sb.Append(str[i]);
+                    if (char.IsLetter(c))
+                    {
+                        sb.Append(c);
+                    }
+                    
                 }
-                if (str[i] == ' ' || i == str.Length - 1)
+                if (str[i] == ' ' && sb.Length != 0 || i == str.Length - 1)
                 {
                     string word = sb.ToString();
                     if (!words.ContainsKey(word))
@@ -376,6 +382,56 @@ namespace DataStructures
                     sb.Clear();
                 }
             }
+            int uniqueCount = 0;
+            var keyArr = words.Values;
+            foreach (var item in keyArr)
+            {
+                if ((int)item == 1)
+                {
+                    uniqueCount++;
+                }
+            }
+            return uniqueCount;
+        }
+
+        public int CountUniqueWordsFromFile(string filePath)
+        {
+            if (filePath == null) return 0;
+            Hashtable words = new Hashtable();
+            StringBuilder sb = new StringBuilder();
+
+            IEnumerable<string> lines = null;
+            if (File.Exists(filePath)) lines = File.ReadLines(filePath);
+            else throw new Exception("File does not exist");
+            foreach (var line in lines)
+            {
+                for (int i = 0; i < line.Length; i++)
+                {
+                    if (!char.IsLetter(line[i]))
+                    {
+                        continue;
+                    }
+                    if (line[i] != ' ')
+                    {
+                        sb.Append(line[i]);
+                    }
+                    if (line[i] == ' ' || i == line.Length - 1)
+                    {
+                        string word = sb.ToString();
+                        if (!words.ContainsKey(word))
+                        {
+                            words.Add(word, 1);
+                        }
+                        else
+                        {
+                            int count = (int)words[word];
+                            words[word] = ++count;
+                        }
+                        sb.Clear();
+                    }
+                }
+            }
+            
             int uniqueCount = 0;
             var keyArr = words.Values;
             foreach (var item in keyArr)
