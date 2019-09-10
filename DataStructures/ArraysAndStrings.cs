@@ -174,8 +174,6 @@ namespace DataStructures
 
         #endregion
 
-        // Tasks From My Interviews
-
         #region 1..1 Sorting Region
 
         public int[] Sort(int[] arr)
@@ -218,28 +216,6 @@ namespace DataStructures
         #endregion
 
         #region 1..2 Remove Duplicates From Each Substring in String
-
-        //public string RemoveDupsFromSubstrings(string str)
-        //{
-        //    if (str == null) throw new NullReferenceException();
-        //    if (str == "") throw new Exception("String is empty");
-        //    if (str.Length == 1) return str;
-        //    if (!str.All(c => char.IsLetter(c))) throw new Exception("This string contains non alphabetic char");
-        //    StringBuilder sb = new StringBuilder();
-        //    char current = str[0];
-        //    char next;
-        //    sb.Append(current);
-        //    for (int i = 0; i < str.Length - 1; i++)
-        //    {
-        //        current = str[i];
-        //        next = str[i + 1];
-        //        if (current != next)
-        //        {
-        //            sb.Append(next);
-        //        }
-        //    }
-        //    return sb.ToString();
-        //}
 
         public string RemoveDupsFromSubstrings(string str)
         {
@@ -442,6 +418,34 @@ namespace DataStructures
                 }
             }
             return uniqueCount;
+        }
+
+        #endregion
+
+        #region 1..7 Common Occurrence (majority number of digit in the array) 
+
+        public int? CommonOccurrence(int[] arr)
+        {
+            if (arr == null) throw new NullReferenceException();
+            int middleMore = (arr.Length / 2) + 1;
+            int occurrences = 0;
+            Hashtable ht = new Hashtable();
+            for (int i = 0; i < arr.Length; i++)
+            {
+                if (!ht.Contains(arr[i]))
+                {
+                    ht.Add(arr[i], 1);
+                }
+                else
+                {
+                    int value = (int)ht[arr[i]];
+                    ht[arr[i]] = ++value;
+                    if (occurrences < value) occurrences = value;
+                    if (value >= middleMore) return arr[i];
+                    if ((arr.Length - i - 1 + occurrences) < middleMore) return null;
+                }
+            }
+            return null;
         }
 
         #endregion

@@ -646,5 +646,27 @@ namespace TestDataStructure
 
 
         #endregion
+
+        #region 1..7 Common Occurrence (majority number of digit in the array) 
+
+        [TestMethod]
+        public void CommonOccurence()
+        {
+            int[] arr = { 2, 2, 2, 3 };
+            int expected = 2;
+            int? actual = _arraysAndStrings.CommonOccurrence(arr);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void CommonOccurence1()
+        {
+            int[] arr = { 2, 2, 1, 3 };
+            int expected = 2;
+            int? actual = _arraysAndStrings.CommonOccurrence(arr);
+            Assert.AreNotEqual(expected, null);
+        }
+
+        #endregion
     }
 }
