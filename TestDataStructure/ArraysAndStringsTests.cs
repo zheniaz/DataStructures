@@ -141,6 +141,32 @@ namespace TestDataStructure
             Assert.IsFalse(result);
         }
 
+        // Classic palindrom with special chars
+        [TestMethod]
+        public void IsPalindromClassic()
+        {
+            string palindrom = @"a,b'[a\";
+            bool actual = _arraysAndStrings.IsPalindromClasic(palindrom);
+            bool expected = true;
+            Assert.AreEqual(actual, expected);
+        }
+        [TestMethod]
+        public void IsPalindromClassic2()
+        {
+            string palindrom = @"a,b'[a";
+            bool actual = _arraysAndStrings.IsPalindromClasic(palindrom);
+            bool expected = true;
+            Assert.AreEqual(actual, expected);
+        }
+        [TestMethod]
+        public void IsPalindromClassic3()
+        {
+            string palindrom = @"-/.,a,b'[a\";
+            bool actual = _arraysAndStrings.IsPalindromClasic(palindrom);
+            bool expected = true;
+            Assert.AreEqual(actual, expected);
+        }
+
         #endregion
 
         #region 1.5 One Away Section

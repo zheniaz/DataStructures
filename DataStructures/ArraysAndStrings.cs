@@ -84,6 +84,31 @@ namespace DataStructures
             return oddCount <= 1;
         }
 
+        // "aba" == true; "a,,;b]a" == true;
+        public bool IsPalindromClasic(string str)
+        {
+            if (str == "" || str.Length == 1) return true;
+            int start = 0;
+            int end = str.Length - 1;
+            for (int i = 0; i < str.Length / 2; i++)
+            {
+                while (!Char.IsLetter(str[start]) && !Char.IsNumber(str[start]) && start < end)
+                {
+                    start++;
+                }
+                while (!Char.IsLetter(str[end]) && !Char.IsNumber(str[end]) && end > start)
+                {
+                    end--;
+                }
+
+                if (str[start] != str[end])
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
         #endregion
 
         #region 1.5 One Away Region
@@ -341,7 +366,7 @@ namespace DataStructures
                     {
                         sb.Append(c);
                     }
-                    
+
                 }
                 if (str[i] == ' ' && sb.Length != 0 || i == str.Length - 1)
                 {
@@ -407,7 +432,7 @@ namespace DataStructures
                     }
                 }
             }
-            
+
             int uniqueCount = 0;
             var keyArr = words.Values;
             foreach (var item in keyArr)
