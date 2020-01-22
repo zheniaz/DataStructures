@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -13,13 +14,14 @@ namespace DataStructures
 
         public bool IsUniq(string str)
         {
-            if (str == null) throw new NullReferenceException();
-            if (str == "") throw new Exception("String is empty");
-            if (str.Length == 1) return true;
-            bool[] charSet = new bool[128];
+            if (string.IsNullOrEmpty(str))
+            {
+                throw new Exception("The string is null, or empty!");
+            }
+            var charSet = new bool[128];
             for (int i = 0; i < str.Length; i++)
             {
-                int item = str[i];
+                var item = str[i];
                 if (charSet[item] == true)
                 {
                     return false;
@@ -33,13 +35,25 @@ namespace DataStructures
 
         #region 1.2 Check Permutation Region
 
-        public bool CheckPermutation(string s, string t)
+        public bool IsPermutation(string s, string t)
         {
-            if (s.Length != t.Length) return false;
+            if (string.IsNullOrEmpty(s) || string.IsNullOrEmpty(t))
+            {
+                throw new NullReferenceException();
+            }
+
+            if (s.Length != t.Length)
+            {
+                return false;
+            }
+
             if ((s == null && t == null)
                 || (s == "" && t == "")
                 || (s.Length == 1 && t.Length == 1 && s == t))
+            {
                 return true;
+            }
+
             int[] letter = new int[128];
             for (int i = 0; i < s.Length; i++)
             {
@@ -48,7 +62,10 @@ namespace DataStructures
             for (int i = 0; i < t.Length; i++)
             {
                 --letter[t[i]];
-                if (letter[t[i]] < 0) return false;
+                if (letter[t[i]] < 0)
+                {
+                    return false;
+                }
             }
             return true;
         }
@@ -57,29 +74,36 @@ namespace DataStructures
 
         #region 1.4 Palindrom Region
 
-        public bool IsPalindrom(string str)
+        public bool IsPalindromPermutation(string str)
         {
-            if (str == null) throw new NullReferenceException();
-            if (str == "") throw new Exception("String is empty");
-            if (str.Length == 1) return true;
+            if (string.IsNullOrEmpty(str))
+            {
+                throw new NullReferenceException();
+            }
+            if (str.Length <= 1)
+            {
+                return true;
+            }
             str = str.ToLower();
             int oddCount = 0;
             Hashtable ht = new Hashtable();
             for (int i = 0; i < str.Length; i++)
             {
                 int count = 0;
-                char item = str[i];
-                if (item == ' ') continue;
-                if (!ht.ContainsKey(item))
+                if (str[i] == ' ' || !Char.IsLetter(str[i]))
                 {
-                    ht.Add(item, ++count);
+                    continue;
+                }
+                if (!ht.Contains(str[i]))
+                {
+                    ht.Add(str[i], ++count);
                 }
                 else
                 {
-                    count = (int)ht[item];
-                    ht[item] = ++count;
+                    count = (int)ht[str[i]];
+                    ht[str[i]] = ++count;
                 }
-                oddCount = (count % 2 == 0) ? --oddCount : ++oddCount;
+                oddCount = (int)ht[str[i]] % 2 != 0 ? ++oddCount : --oddCount;
             }
             return oddCount <= 1;
         }
@@ -87,7 +111,11 @@ namespace DataStructures
         // "aba" == true; "a,,;b]a" == true;
         public bool IsPalindromClasic(string str)
         {
-            if (str == "" || str.Length == 1) return true;
+            if (str == "" || str.Length == 1)
+            {
+                return true;
+            }
+
             int start = 0;
             int end = str.Length - 1;
             for (int i = 0; i < str.Length / 2; i++)
@@ -116,9 +144,20 @@ namespace DataStructures
         public bool OneEditAway(string s, string t)
         {
             if (s == null && t == null || s == null || t == null)
+            {
                 throw new NullReferenceException();
-            if (s == "" && t == "") throw new Exception("Strings are empty");
-            if (Math.Abs(s.Length - t.Length) > 1) return false;
+            }
+
+            if (s == "" && t == "")
+            {
+                throw new Exception("Strings are empty");
+            }
+
+            if (Math.Abs(s.Length - t.Length) > 1)
+            {
+                return false;
+            }
+
             if (s.Length == t.Length)
             {
                 return IsOneEdit(s, t);
@@ -133,7 +172,11 @@ namespace DataStructures
             {
                 if (s[i] != t[i])
                 {
-                    if (isOneEdit) return false;
+                    if (isOneEdit)
+                    {
+                        return false;
+                    }
+
                     isOneEdit = true;
                 }
             }
@@ -149,7 +192,10 @@ namespace DataStructures
                 if (s[indexS] != t[indexT])
                 {
                     indexS++;
-                    if (indexS - indexT > 1) return false;
+                    if (indexS - indexT > 1)
+                    {
+                        return false;
+                    }
                 }
                 else
                 {
@@ -166,9 +212,21 @@ namespace DataStructures
 
         public string StringCompression(string str)
         {
-            if (str == null) throw new NullReferenceException();
-            if (str == "") throw new Exception("String is empty");
-            if (str.Length <= 2) return str;
+            if (str == null)
+            {
+                throw new NullReferenceException();
+            }
+
+            if (str == "")
+            {
+                throw new Exception("String is empty");
+            }
+
+            if (str.Length <= 2)
+            {
+                return str;
+            }
+
             StringBuilder sb = new StringBuilder();
             int countConsecutive = 0;
             for (int i = 0; i < str.Length; i++)
@@ -190,9 +248,20 @@ namespace DataStructures
         public bool IsRotation(string s, string t)
         {
             if (s == null && t == null || s == null || t == null)
+            {
                 throw new NullReferenceException();
-            if (s == "" && t == "") throw new Exception("Strings are empty");
-            if (s.Length != t.Length) return false;
+            }
+
+            if (s == "" && t == "")
+            {
+                throw new Exception("Strings are empty");
+            }
+
+            if (s.Length != t.Length)
+            {
+                return false;
+            }
+
             string ss = s + s;
             return ss.Contains(t);
         }
@@ -203,8 +272,16 @@ namespace DataStructures
 
         public int[] Sort(int[] arr)
         {
-            if (arr == null) return null;
-            if (arr.Length == 0) return null;
+            if (arr == null)
+            {
+                return null;
+            }
+
+            if (arr.Length == 0)
+            {
+                return null;
+            }
+
             for (int i = 0; i < arr.Length - 1; i++)
             {
                 for (int j = i + 1; j < arr.Length; j++)
@@ -244,10 +321,26 @@ namespace DataStructures
 
         public string RemoveDupsFromSubstrings(string str)
         {
-            if (str == null) throw new NullReferenceException();
-            if (str == "") throw new Exception("String is empty");
-            if (str.Length == 1) return str;
-            if (!str.All(c => char.IsLetter(c))) throw new Exception("This string contains non alphabetic chars");
+            if (str == null)
+            {
+                throw new NullReferenceException();
+            }
+
+            if (str == "")
+            {
+                throw new Exception("String is empty");
+            }
+
+            if (str.Length == 1)
+            {
+                return str;
+            }
+
+            if (!str.All(c => char.IsLetter(c)))
+            {
+                throw new Exception("This string contains non alphabetic chars");
+            }
+
             StringBuilder sb = new StringBuilder();
             sb.Append(str[0]);
             for (int i = 0; i < str.Length - 1; i++)
@@ -288,7 +381,10 @@ namespace DataStructures
             for (int i = words.Count - 1; i >= 0; i--)
             {
                 sb.Append(words[i]);
-                if (i != 0) sb.Append(' ');
+                if (i != 0)
+                {
+                    sb.Append(' ');
+                }
             }
             return sb.ToString();
         }
@@ -299,9 +395,21 @@ namespace DataStructures
 
         public string ReverseSubstrings(string str)
         {
-            if (str == null) throw new NullReferenceException();
-            if (str == "") throw new Exception("String is empty");
-            if (str.Length == 1) return str;
+            if (str == null)
+            {
+                throw new NullReferenceException();
+            }
+
+            if (str == "")
+            {
+                throw new Exception("String is empty");
+            }
+
+            if (str.Length == 1)
+            {
+                return str;
+            }
+
             str = str.Trim();
             str = ReverseString(str);
             List<string> words = new List<string>();
@@ -324,7 +432,10 @@ namespace DataStructures
             for (int i = words.Count - 1; i >= 0; i--)
             {
                 sb.Append(words[i]);
-                if (i != 0) sb.Append(' ');
+                if (i != 0)
+                {
+                    sb.Append(' ');
+                }
             }
             return sb.ToString();
         }
@@ -351,10 +462,18 @@ namespace DataStructures
 
         public int CountUniqueWords(string str)
         {
-            if (str == null) return 0;
+            if (str == null)
+            {
+                return 0;
+            }
+
             Hashtable words = new Hashtable();
             str = str.Trim();
-            if (str == "") return 0;
+            if (str == "")
+            {
+                return 0;
+            }
+
             StringBuilder sb = new StringBuilder();
 
             for (int i = 0; i < str.Length; i++)
@@ -397,13 +516,24 @@ namespace DataStructures
 
         public int CountUniqueWordsFromFile(string filePath)
         {
-            if (filePath == null) return 0;
+            if (filePath == null)
+            {
+                return 0;
+            }
+
             Hashtable words = new Hashtable();
             StringBuilder sb = new StringBuilder();
 
             IEnumerable<string> lines = null;
-            if (File.Exists(filePath)) lines = File.ReadLines(filePath);
-            else throw new Exception("File does not exist");
+            if (File.Exists(filePath))
+            {
+                lines = File.ReadLines(filePath);
+            }
+            else
+            {
+                throw new Exception("File does not exist");
+            }
+
             foreach (var line in lines)
             {
                 for (int i = 0; i < line.Length; i++)
@@ -451,7 +581,11 @@ namespace DataStructures
 
         public int? CommonOccurrence(int[] arr)
         {
-            if (arr == null) throw new NullReferenceException();
+            if (arr == null)
+            {
+                throw new NullReferenceException();
+            }
+
             int middleMore = (arr.Length / 2) + 1;
             int occurrences = 0;
             Hashtable ht = new Hashtable();
@@ -465,12 +599,89 @@ namespace DataStructures
                 {
                     int value = (int)ht[arr[i]];
                     ht[arr[i]] = ++value;
-                    if (occurrences < value) occurrences = value;
-                    if (value >= middleMore) return arr[i];
-                    if ((arr.Length - i - 1 + occurrences) < middleMore) return null;
+                    if (occurrences < value)
+                    {
+                        occurrences = value;
+                    }
+
+                    if (value >= middleMore)
+                    {
+                        return arr[i];
+                    }
+
+                    if ((arr.Length - i - 1 + occurrences) < middleMore)
+                    {
+                        return null;
+                    }
                 }
             }
             return null;
+        }
+
+        #endregion
+
+        #region 1..8 shift zeros to the right
+        // Move all zeros in an array to the end
+        public int[] ShiftZerosToTheRight(int[] arr)
+        {
+            if (arr == null || arr.Length <= 1)
+            {
+                return arr;
+            }
+            int indexForZero = arr.Length - 1;
+            for (int i = 0; i <= indexForZero; i++)
+            {
+                if (arr[i] == 0)
+                {
+                    if (arr[indexForZero] == 0)
+                    {
+                        while (arr[indexForZero] == 0)
+                        {
+                            Debug.WriteLine(arr);
+                            if (indexForZero == i)
+                            {
+                                return arr;
+                            }
+                            indexForZero--;
+                        }
+                    }
+                    int current = arr[i];
+                    arr[i] = arr[indexForZero];
+                    arr[indexForZero] = current;
+                    indexForZero--;
+                }
+            }
+            return arr;
+        }
+
+        #endregion
+
+        #region 1..9 Get Uniq Digits
+
+        public int[] GetUniqDigitsArray(int[] arr)
+        {
+            if (arr.Length <=1)
+            {
+                return arr;
+            }
+            int currentIndex = 1;
+            for (int i = 0; i < arr.Length - 1; i++)
+            {
+                if (arr[i] == arr[i + 1])
+                {
+                    continue;
+                }
+                else if (arr[i] != arr[i + 1])
+                {
+                    arr[currentIndex] = arr[i + 1];
+                    currentIndex++;
+                }
+            }
+            for (int i = currentIndex; i < arr.Length; i++)
+            {
+                arr[i] = 0;
+            }
+            return arr;
         }
 
         #endregion

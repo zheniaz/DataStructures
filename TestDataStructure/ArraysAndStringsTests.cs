@@ -1,9 +1,7 @@
 using DataStructures;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections;
 using System.Linq;
-using System.Text;
 //using DataStructures;
 namespace TestDataStructure
 {
@@ -30,6 +28,22 @@ namespace TestDataStructure
             Assert.AreEqual(result, false);
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(System.Exception))]
+        public void IsUniqueTest3()
+        {
+            string str = "";
+            bool result = _arraysAndStrings.IsUniq(str);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.Exception))]
+        public void IsUniqueTest4()
+        {
+            string str = null;
+            bool result = _arraysAndStrings.IsUniq(str);
+        }
+
         #endregion
 
         #region 1.2 Check Permutation Region
@@ -39,7 +53,7 @@ namespace TestDataStructure
         {
             string s = "asdf";
             string t = "sdfa";
-            bool result = _arraysAndStrings.CheckPermutation(s, t);
+            bool result = _arraysAndStrings.IsPermutation(s, t);
             Assert.AreEqual(result, true);
         }
 
@@ -48,17 +62,44 @@ namespace TestDataStructure
         {
             string s = "asdf";
             string t = "sdf";
-            bool result = _arraysAndStrings.CheckPermutation(s, t);
+            bool result = _arraysAndStrings.IsPermutation(s, t);
             Assert.AreEqual(result, false);
         }
 
         [TestMethod]
+        [ExpectedException(typeof(System.NullReferenceException))]
         public void CheckPermutationTest3()
         {
             string s = "";
             string t = "";
-            bool result = _arraysAndStrings.CheckPermutation(s, t);
-            Assert.IsTrue(result);
+            bool result = _arraysAndStrings.IsPermutation(s, t);
+        }
+
+        [TestMethod]
+        public void CheckPermutationTest4()
+        {
+            string s = "aaff";
+            string t = "ffaa";
+            bool result = _arraysAndStrings.IsPermutation(s, t);
+            Assert.AreEqual(result, true);
+        }
+
+        [TestMethod]
+        public void CheckPermutationTest5()
+        {
+            string s = "aasd";
+            string t = "asad";
+            bool result = _arraysAndStrings.IsPermutation(s, t);
+            Assert.AreEqual(result, true);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.NullReferenceException))]
+        public void CheckPermutationTest6()
+        {
+            string s = "";
+            string t = "asad";
+            bool result = _arraysAndStrings.IsPermutation(s, t);
         }
 
         #endregion
@@ -69,51 +110,51 @@ namespace TestDataStructure
         public void IsPalindromTest1()
         {
             string palindrom = "Tact Coa";
-            bool result = _arraysAndStrings.IsPalindrom(palindrom);
+            bool result = _arraysAndStrings.IsPalindromPermutation(palindrom);
             Assert.IsTrue(result);
         }
         [TestMethod]
         public void IsPalindromTest2()
         {
             string palindrom = "taat";
-            bool result = _arraysAndStrings.IsPalindrom(palindrom);
+            bool result = _arraysAndStrings.IsPalindromPermutation(palindrom);
             Assert.IsTrue(result);
         }
         [TestMethod]
         public void IsPalindromTest3()
         {
             string palindrom = "atarata";
-            bool result = _arraysAndStrings.IsPalindrom(palindrom);
+            bool result = _arraysAndStrings.IsPalindromPermutation(palindrom);
             Assert.IsTrue(result);
         }
         [TestMethod]
         public void IsPalindromTest4()
         {
             string palindrom = "a";
-            bool result = _arraysAndStrings.IsPalindrom(palindrom);
+            bool result = _arraysAndStrings.IsPalindromPermutation(palindrom);
             Assert.IsTrue(result);
         }
         [TestMethod]
         public void IsPalindromTest5()
         {
             string palindrom = "aa";
-            bool result = _arraysAndStrings.IsPalindrom(palindrom);
+            bool result = _arraysAndStrings.IsPalindromPermutation(palindrom);
             Assert.IsTrue(result);
         }
 
         [TestMethod]
+        [ExpectedException(typeof(NullReferenceException))]
         public void IsPalindromTest6()
         {
             string palindrom = "";
-            var exception = Assert.ThrowsException<Exception>(() => _arraysAndStrings.IsPalindrom(palindrom));
-            Assert.IsTrue(exception.GetType() == typeof(Exception));
+            var exception =  _arraysAndStrings.IsPalindromPermutation(palindrom);
         }
 
         [TestMethod]
         public void IsPalindromHasNullString()
         {
             string palindrom = null;
-            var exception = Assert.ThrowsException<NullReferenceException>(() => _arraysAndStrings.IsPalindrom(palindrom));
+            var exception = Assert.ThrowsException<NullReferenceException>(() => _arraysAndStrings.IsPalindromPermutation(palindrom));
             Assert.IsTrue(exception.GetType() == typeof(NullReferenceException));
         }
 
@@ -121,7 +162,7 @@ namespace TestDataStructure
         public void IsNotPalindromTest1()
         {
             string palindrom = "fasdf";
-            bool result = _arraysAndStrings.IsPalindrom(palindrom);
+            bool result = _arraysAndStrings.IsPalindromPermutation(palindrom);
             Assert.IsFalse(result);
         }
 
@@ -129,7 +170,7 @@ namespace TestDataStructure
         public void IsNotPalindromTest2()
         {
             string palindrom = "as";
-            bool result = _arraysAndStrings.IsPalindrom(palindrom);
+            bool result = _arraysAndStrings.IsPalindromPermutation(palindrom);
             Assert.IsFalse(result);
         }
 
@@ -137,7 +178,7 @@ namespace TestDataStructure
         public void IsNotPalindromTest3()
         {
             string palindrom = "tatata";
-            bool result = _arraysAndStrings.IsPalindrom(palindrom);
+            bool result = _arraysAndStrings.IsPalindromPermutation(palindrom);
             Assert.IsFalse(result);
         }
 
@@ -332,7 +373,7 @@ namespace TestDataStructure
         [TestMethod]
         public void SortTestSuccess1()
         {
-            int[] arr = { 5,4,3,2,1 };
+            int[] arr = { 5, 4, 3, 2, 1 };
             int[] expected = { 1, 2, 3, 4, 5 };
             var result = _arraysAndStrings.Sort(arr);
             Assert.IsTrue(expected.SequenceEqual(result));
@@ -395,7 +436,7 @@ namespace TestDataStructure
         public void SortSubArraysSuccess4()
         {
             int[] arr = { 1, 1, 1, 2, 2 };
-            int[] expected = { 1, 2, 1, 2, 1};
+            int[] expected = { 1, 2, 1, 2, 1 };
             var result = _arraysAndStrings.SortSubArrays(arr);
             Assert.IsTrue(expected.SequenceEqual(result));
         }
@@ -544,7 +585,7 @@ namespace TestDataStructure
         public void ReverseWordsNullString()
         {
             string arrange = null;
-            var exception = Assert.ThrowsException<NullReferenceException>(() => _arraysAndStrings.IsPalindrom(arrange));
+            var exception = Assert.ThrowsException<NullReferenceException>(() => _arraysAndStrings.IsPalindromPermutation(arrange));
             Assert.IsTrue(exception.GetType() == typeof(NullReferenceException));
         }
 
@@ -575,7 +616,7 @@ namespace TestDataStructure
 
         #endregion
 
-        #region 1..6
+        #region 1..6 Count unique Words in string
 
         [TestMethod]
         public void CountUniqueWordsTest1()
@@ -691,6 +732,186 @@ namespace TestDataStructure
             int expected = 2;
             int? actual = _arraysAndStrings.CommonOccurrence(arr);
             Assert.AreNotEqual(expected, null);
+        }
+
+        #endregion
+
+        #region 1..8 shift zeros to the right
+
+
+        [TestMethod]
+        public void ShiftZerosToTheRight1()
+        {
+            int[] arr = { 0, 1, 2, 3 };
+            int[] expected = { 3, 1, 2, 0 };
+            int[] actual = _arraysAndStrings.ShiftZerosToTheRight(arr);
+            Assert.IsTrue(Enumerable.SequenceEqual(actual, expected));
+        }
+
+        [TestMethod]
+        public void ShiftZerosToTheRight2()
+        {
+            int[] arr = { 0, 0, 2, 3 };
+            int[] expected = { 3, 2, 0, 0 };
+            int[] actual = _arraysAndStrings.ShiftZerosToTheRight(arr);
+            Assert.IsTrue(Enumerable.SequenceEqual(actual, expected));
+        }
+
+        [TestMethod]
+        public void ShiftZerosToTheRight3()
+        {
+            int[] arr = { 0, 1, 0, 3 };
+            int[] expected = { 3, 1, 0, 0 };
+            int[] actual = _arraysAndStrings.ShiftZerosToTheRight(arr);
+            Assert.IsTrue(Enumerable.SequenceEqual(actual, expected));
+        }
+
+        [TestMethod]
+        public void ShiftZerosToTheRight4()
+        {
+            int[] arr = { 0, 1, 2, 0 };
+            int[] expected = { 2, 1, 0, 0 };
+            int[] actual = _arraysAndStrings.ShiftZerosToTheRight(arr);
+            Assert.IsTrue(Enumerable.SequenceEqual(actual, expected));
+        }
+
+        [TestMethod]
+        public void ShiftZerosToTheRight5()
+        {
+            int[] arr = { 0, 1, 0, 0 };
+            int[] expected = { 1, 0, 0, 0 };
+            int[] actual = _arraysAndStrings.ShiftZerosToTheRight(arr);
+            Assert.IsTrue(Enumerable.SequenceEqual(actual, expected));
+        }
+
+        [TestMethod]
+        public void ShiftZerosToTheRight6()
+        {
+            int[] arr = { 0, 0, 1, 0, 0, 0 };
+            int[] expected = { 1, 0, 0, 0, 0, 0 };
+            int[] actual = _arraysAndStrings.ShiftZerosToTheRight(arr);
+            Assert.IsTrue(Enumerable.SequenceEqual(actual, expected));
+        }
+
+        [TestMethod]
+        public void ShiftZerosToTheRight7()
+        {
+            int[] arr = { 1, 2, 3 };
+            int[] expected = { 1, 2, 3 };
+            int[] actual = _arraysAndStrings.ShiftZerosToTheRight(arr);
+            Assert.IsTrue(Enumerable.SequenceEqual(actual, expected));
+        }
+
+        [TestMethod]
+        public void ShiftZerosToTheRight8()
+        {
+            int[] arr = { 0, 0, 0 };
+            int[] expected = { 0, 0, 0 };
+            int[] actual = _arraysAndStrings.ShiftZerosToTheRight(arr);
+            Assert.IsTrue(Enumerable.SequenceEqual(actual, expected));
+        }
+
+        [TestMethod]
+        public void ShiftZerosToTheRight9()
+        {
+            int[] arr = { 0, 1, 0, 1, 0 };
+            int[] expected = { 1, 1, 0, 0, 0 };
+            int[] actual = _arraysAndStrings.ShiftZerosToTheRight(arr);
+            Assert.IsTrue(Enumerable.SequenceEqual(actual, expected));
+        }
+
+        [TestMethod]
+        public void ShiftZerosToTheRight10()
+        {
+            int[] arr = { 1, 0, 1, 0, 1 };
+            int[] expected = { 1, 1, 1, 0, 0 };
+            int[] actual = _arraysAndStrings.ShiftZerosToTheRight(arr);
+            Assert.IsTrue(Enumerable.SequenceEqual(actual, expected));
+        }
+
+        [TestMethod]
+        public void ShiftZerosToTheRight11()
+        {
+            int[] arr = { };
+            int[] expected = { };
+            int[] actual = _arraysAndStrings.ShiftZerosToTheRight(arr);
+            Assert.IsTrue(Enumerable.SequenceEqual(actual, expected));
+        }
+
+        [TestMethod]
+        public void ShiftZerosToTheRight12()
+        {
+            int[] arr = { 0 };
+            int[] expected = { 0 };
+            int[] actual = _arraysAndStrings.ShiftZerosToTheRight(arr);
+            Assert.IsTrue(Enumerable.SequenceEqual(actual, expected));
+        }
+
+        [TestMethod]
+        public void ShiftZerosToTheRight13()
+        {
+            int[] arr = null;
+            int[] expected = null;
+            int[] actual = _arraysAndStrings.ShiftZerosToTheRight(arr);
+            Assert.IsNull(actual);
+        }
+
+        [TestMethod]
+        public void ShiftZerosToTheRight14()
+        {
+            int[] arr = { 0, 0, 0, 0, 1 };
+            int[] expected = { 1, 0, 0, 0, 0 }; ;
+            int[] actual = _arraysAndStrings.ShiftZerosToTheRight(arr);
+            Assert.IsTrue(Enumerable.SequenceEqual(actual, expected));
+        }
+
+        #endregion
+
+        #region 1..9 Get Uniq Digits
+
+        [TestMethod]
+        public void GetUniqDigitsArrayTest31()
+        {
+            int[] arr = { 1, 1, 2, 3 };
+            int[] expected = { 1, 2, 3, 0 };
+            int[] actual = _arraysAndStrings.GetUniqDigitsArray(arr);
+            Assert.IsTrue(Enumerable.SequenceEqual(actual, expected));
+        }
+
+        [TestMethod]
+        public void GetUniqDigitsArrayTest32()
+        {
+            int[] arr = { 1, 1, 1, 2, 3 };
+            int[] expected = { 1, 2, 3, 0, 0 };
+            int[] actual = _arraysAndStrings.GetUniqDigitsArray(arr);
+            Assert.IsTrue(Enumerable.SequenceEqual(actual, expected));
+        }
+
+        [TestMethod]
+        public void GetUniqDigitsArrayTest3()
+        {
+            int[] arr = { 1, 1, 1, 3 };
+            int[] expected = { 1, 3, 0, 0 };
+            int[] actual = _arraysAndStrings.GetUniqDigitsArray(arr);
+            Assert.IsTrue(Enumerable.SequenceEqual(actual, expected));
+        }
+
+        [TestMethod]
+        public void GetUniqDigitsArrayTest34()
+        {
+            int[] arr = { 1, 1, 1, 1 };
+            int[] expected = { 1, 0, 0, 0 };
+            int[] actual = _arraysAndStrings.GetUniqDigitsArray(arr);
+            Assert.IsTrue(Enumerable.SequenceEqual(actual, expected));
+        }
+
+        [TestMethod]
+        public void GetUniqDigitsArrayTest35()
+        {
+            int[] arr = { 1, 1, 2, 2 };
+            int[] expected = { 1, 2, 0, 0 };
+            int[] actual = _arraysAndStrings.GetUniqDigitsArray(arr);
+            Assert.IsTrue(Enumerable.SequenceEqual(actual, expected));
         }
 
         #endregion
