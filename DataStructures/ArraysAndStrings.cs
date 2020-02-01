@@ -340,7 +340,6 @@ namespace DataStructures
             {
                 throw new Exception("This string contains non alphabetic chars");
             }
-
             StringBuilder sb = new StringBuilder();
             sb.Append(str[0]);
             for (int i = 0; i < str.Length - 1; i++)
@@ -356,7 +355,6 @@ namespace DataStructures
         #endregion
 
         #region 1..3 Reverse Words in string
-
         public string ReverseWordsInString(string str)
         {
             str = str.Trim();
@@ -389,6 +387,32 @@ namespace DataStructures
             return sb.ToString();
         }
 
+        // new approach using list of strings
+        public string ReverseWordsInString2(string str)
+        {
+            List<string> words = new List<string>();
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < str.Length; i++)
+            {
+                if (str[i] != ' ')
+                {
+                    sb.Append(str[i]);
+                }
+                else
+                {
+                    words.Add(sb.ToString());
+                    sb.Clear();
+                }
+            }
+            words.Add(sb.ToString());
+            sb.Clear();
+            for (int i = words.Count - 1; i >= 0; i--)
+            {
+                sb.Append(words[i]);
+                sb.Append(' ');
+            }
+            return sb.ToString();
+        }
         #endregion
 
         #region 1..4 Reverse Substrings
@@ -660,7 +684,7 @@ namespace DataStructures
 
         public int[] GetUniqDigitsArray(int[] arr)
         {
-            if (arr.Length <=1)
+            if (arr.Length <= 1)
             {
                 return arr;
             }
