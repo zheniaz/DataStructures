@@ -30,109 +30,34 @@ namespace DataStructures
 
         #region 4.3 List Of Depths
 
-
-        //public List<LinkedList> ListOfDepths(Node node)
-        //{
-        //    List<LinkedList> result = new List<LinkedList>();
-        //    LinkedList currentLevelNode = new LinkedList();
-        //    currentLevelNode.AddNode(node);
-        //    result.Add(currentLevelNode);
-        //    bool isHasChild = node.left != null || node.right != null ? true : false;
-        //    while (isHasChild)
-        //    {
-        //        LinkedList tempLinkedList = new LinkedList();
-        //        Node tempNode = currentLevelNode.head;
-        //        while (tempNode != null)
-        //        {
-        //            if (tempNode.left != null) tempLinkedList.AddNode(tempNode.left);
-        //            if (tempNode.right != null) tempLinkedList.AddNode(tempNode.right);
-        //            tempNode = tempNode.next;
-        //        }
-        //        if (tempLinkedList.Count != 0)
-        //        {
-        //            result.Add(tempLinkedList);
-        //            currentLevelNode = tempLinkedList;
-        //            isHasChild = tempLinkedList.Count != 0;
-        //        }
-        //        else
-        //        {
-        //            break;
-        //        }
-        //    }
-        //    return result;
-        //}
-
-        public List<LinkedList> ListOfBSTDepths(Node node)
+        //we want to iterate through the root first, then level 2, then level 3, and soon.
+        //With each level i, we will have already fully visited all nodes on level i - l.Tbis means that to get which
+        //nodes are on level i, we can simply look at all children of the nodes of level i - 1.
+        //  0(N) time,  0(N) data
+        public List<LinkedList<Node>> ListOfBSTDepths(Node root)
         {
-            if (node == null)
+            List<LinkedList<Node>> result = new List<LinkedList<Node>>();
+            LinkedList<Node> current = new LinkedList<Node>();
+            if (root != null)
             {
-                throw new NullReferenceException();
+                current.AddLast(root);
             }
-
-            List<LinkedList> result = new List<LinkedList>();
-            LinkedList currentLevel = new LinkedList();
-            currentLevel.AddNode(node);
-            result.Add(currentLevel);
-            while (currentLevel.head != null)
+            while (current.Count > 0)
             {
-                Node temp = currentLevel.head;
-                LinkedList next = new LinkedList();
-                while (temp != null)
+                result.Add(current);
+                LinkedList<Node> parents = current;
+                current = new LinkedList<Node>();
+                foreach (var parent in parents)
                 {
-                    if (temp.left != null)
+                    if (parent.left != null)
                     {
-                        next.AddNode(temp.left);
+                        current.AddLast(parent.left);
                     }
-
-                    if (temp.right != null)
+                    if (parent.right != null)
                     {
-                        next.AddNode(temp.right);
+                        current.AddLast(parent.right);
                     }
-
-                    temp = temp.next;
                 }
-                if (next.Count != 0)
-                {
-                    result.Add(next);
-                }
-
-                currentLevel = next;
-            }
-            return result;
-        }
-
-        public List<LinkedList> ListOfDepths(Node node)
-        {
-            if (node == null)
-            {
-                throw new NullReferenceException();
-            }
-
-            List<LinkedList> result = new List<LinkedList>();
-            LinkedList currentLevel = new LinkedList();
-            currentLevel.AddNode(node);
-            result.Add(currentLevel);
-            Node[] nodes = currentLevel.head.kids;
-            currentLevel = new LinkedList();
-
-
-
-
-            while (nodes.Length != 0)
-            {
-
-                List<Node> nextLevel = new List<Node>();
-                foreach (var item in nodes)
-                {
-                    currentLevel.AddNode(item);
-                    nextLevel.AddRange(item.kids);
-                }
-                if (nextLevel.Count != 0)
-                {
-                    result.Add(currentLevel);
-                }
-
-                nodes = nextLevel.ToArray();
             }
             return result;
         }
@@ -140,7 +65,9 @@ namespace DataStructures
         #endregion
 
         #region 4.5 Check if BT is a BST
-
+        // The time complexity for this solution isO(N), where N is the number of nodes in the tree.
+        // Due to the use of recursion, the space complexity is O(log M) on a balanced tree.
+        // There are up to 0(log N) recursive calls on the stack since we may recurse up to the depth of the tree.
         public bool CheckIsBST(Node node)
         {
             return CheckIsBST(node, null, null);
@@ -265,6 +192,33 @@ namespace DataStructures
 
             return (x < arr[mid]) ? BinarySearch(arr, start, mid - 1, x)
                              : BinarySearch(arr, mid + 1, end, x);
+        }
+
+        #endregion
+
+        #region 4..3 Find BinarySearchMinimum
+
+        public int BinarySearchMinimum1(int[] arr)
+        {
+            if (arr.Length <= 2)
+            {
+                return -1;
+            }
+            return BinarySearchMinimum2(arr, 0, arr.Length - 1);
+        }
+
+        public int BinarySearchMinimum2(int[] arr, int s, int e)
+        {
+            if (s > e) return -1;
+            int m = (s + e) / 2;
+            if (m - 1 < 0 || m + 1 > arr.Length - 1) return -1;
+            if (arr[m] > arr[m - 1] && arr[m] < arr[m + 1])
+            {
+                return m;
+            }
+            var first = BinarySearchMinimum2(arr, s, m - 1);
+            var second = BinarySearchMinimum2(arr, m + 1, e);
+            return (first != -1) ? first : second;
         }
 
         #endregion

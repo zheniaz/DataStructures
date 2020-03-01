@@ -2,7 +2,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace TestDataStructure
 {
@@ -31,26 +30,13 @@ namespace TestDataStructure
         {
             int[] arr = { 1, 2, 3, 4, 5, 6, 7 };
             Node node = _treesAndGraphs.MinimalTree(arr);
-            List<LinkedList> result = _treesAndGraphs.ListOfBSTDepths(node);
+            List<LinkedList<Node>> result = _treesAndGraphs.ListOfBSTDepths(node);
 
-            List<LinkedList> expected = CreateListOfLinkedListsFor_ListOfDepths();
-
-
-
-            Assert.IsTrue(IsListsOfDeptshAreEqual(expected, result));
-        }
-
-        [TestMethod]
-        public void ListOfDepthTest()
-        {
-            Node node = CreateNodeWithTwoLevelsKids();
-            List<LinkedList> result = _treesAndGraphs.ListOfDepths(node);
-
-            List<LinkedList> expected = CreateListOfLinkedListsFor_ListOfDepths();
+            List<LinkedList<Node>> expected = CreateListOfLinkedListsNodesFor_ListOfDepths();
 
 
 
-            Assert.IsTrue(IsListsOfDeptshAreEqual(expected, result));
+            Assert.IsTrue(IsNodesListsOfDeptshAreEqual(expected, result));
         }
 
         #endregion
@@ -112,6 +98,82 @@ namespace TestDataStructure
 
         #endregion
 
+        #region 4..3 Find BinarySearchMinimum 
+
+        [TestMethod]
+        public void BinarySearchMinimum1()
+        {
+            int[] arr = { 1, 2, 1 };
+            var result = _treesAndGraphs.BinarySearchMinimum1(arr);
+            var expected = 1;
+            Assert.AreEqual(result, expected);
+        }
+
+        [TestMethod]
+        public void BinarySearchMinimum2()
+        {
+            int[] arr = { 1, 1, 1 };
+            var result = _treesAndGraphs.BinarySearchMinimum1(arr);
+            var expected = -1;
+            Assert.AreEqual(result, expected);
+        }
+
+        [TestMethod]
+        public void BinarySearchMinimum3()
+        {
+            int[] arr = { 1, 1, 2, };
+            var result = _treesAndGraphs.BinarySearchMinimum1(arr);
+            var expected = -1;
+            Assert.AreEqual(result, expected);
+        }
+
+        [TestMethod]
+        public void BinarySearchMinimum4()
+        {
+            int[] arr = { 2, 1, 3 };
+            var result = _treesAndGraphs.BinarySearchMinimum1(arr);
+            var expected = -1;
+            Assert.AreEqual(result, expected);
+        }
+
+        [TestMethod]
+        public void BinarySearchMinimum5()
+        {
+            int[] arr = { 1, 1, 1, 1, 2 };
+            var result = _treesAndGraphs.BinarySearchMinimum1(arr);
+            var expected = -1;
+            Assert.AreEqual(result, expected);
+        }
+
+        [TestMethod]
+        public void BinarySearchMinimum6()
+        {
+            int[] arr = { 1, 1, 1, 1, 2, 1 };
+            var result = _treesAndGraphs.BinarySearchMinimum1(arr);
+            var expected = 4;
+            Assert.AreEqual(result, expected);
+        }
+
+        [TestMethod]
+        public void BinarySearchMinimum6_1()
+        {
+            int[] arr = { 1, 1, 1, 1, 2, 1, 1 };
+            var result = _treesAndGraphs.BinarySearchMinimum1(arr);
+            var expected = 4;
+            Assert.AreEqual(result, expected);
+        }
+
+        [TestMethod]
+        public void BinarySearchMinimum7()
+        {
+            int[] arr = { 1, 1, 1, 1, 1 };
+            var result = _treesAndGraphs.BinarySearchMinimum1(arr);
+            var expected = -1;
+            Assert.AreEqual(result, expected);
+        }
+
+        #endregion
+
         #region Working Region
 
         private Node CreateBinarySearchTree()
@@ -148,9 +210,21 @@ namespace TestDataStructure
 
         private bool CheckIsTheSameTree(Node n1, Node n2)
         {
-            if (n1 == null && n2 == null) return true;
-            if (n1 == null || n2 == null) return false;
-            if (n1.data != n2.data) return false;
+            if (n1 == null && n2 == null)
+            {
+                return true;
+            }
+
+            if (n1 == null || n2 == null)
+            {
+                return false;
+            }
+
+            if (n1.data != n2.data)
+            {
+                return false;
+            }
+
             return CheckIsTheSameTree(n1.left, n2.left) && CheckIsTheSameTree(n1.right, n2.right);
         }
 
@@ -193,12 +267,39 @@ namespace TestDataStructure
             return list;
         }
 
+        private List<LinkedList<Node>> CreateListOfLinkedListsNodesFor_ListOfDepths()
+        {
+            List<LinkedList<Node>> list = new List<LinkedList<Node>>();
+            LinkedList<Node> level1 = new LinkedList<Node>();
+            LinkedList<Node> level2 = new LinkedList<Node>();
+            LinkedList<Node> level3 = new LinkedList<Node>();
+            level1.AddLast(new Node(4));
+            level2.AddLast(new Node(2));
+            level2.AddLast(new Node(6));
+            level3.AddLast(new Node(1));
+            level3.AddLast(new Node(3));
+            level3.AddLast(new Node(5));
+            level3.AddLast(new Node(7));
+            list.Add(level1);
+            list.Add(level2);
+            list.Add(level3);
+            return list;
+        }
+
         private bool IsListsOfDeptshAreEqual(List<LinkedList> list1, List<LinkedList> list2)
         {
-            if (list1.Count != list2.Count) return false;
+            if (list1.Count != list2.Count)
+            {
+                return false;
+            }
+
             for (int i = 0; i < list1.Count; i++)
             {
-                if (list1[i].Count != list2[i].Count) return false;
+                if (list1[i].Count != list2[i].Count)
+                {
+                    return false;
+                }
+
                 Node node1 = list1[i].head;
                 Node node2 = list2[i].head;
                 while (node1 != null || node2 != null)
@@ -214,7 +315,34 @@ namespace TestDataStructure
             return true;
         }
 
-        #endregion
+        private bool IsNodesListsOfDeptshAreEqual(List<LinkedList<Node>> list1, List<LinkedList<Node>> list2)
+        {
+            if (list1.Count != list2.Count)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < list1.Count; i++)
+            {
+                if (list1[i].Count != list2[i].Count)
+                {
+                    return false;
+                }
+
+                var node1 = list1[i].First.Value;
+                var node2 = list2[i].First.Value;
+                while (node1 != null || node2 != null)
+                {
+                    if (node1.data != node2.data)
+                    {
+                        return false;
+                    }
+                    node1 = node1.next;
+                    node2 = node2.next;
+                }
+            }
+            return true;
+        }
 
         #endregion
     }

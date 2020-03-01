@@ -323,7 +323,7 @@ namespace DataStructures
 
         #endregion
 
-        #region 2.8 Loop Devection
+        #region 2.8 Loop Detection
 
         public Node LoopDetection(Node node)
         {

@@ -576,7 +576,7 @@ namespace TestDataStructure
         public void ReverseWordsStringWithSpacesBetweenWords()
         {
             string arrange = "  This   is    a     test  ";
-            string expected = "test a is This";
+            string expected = "test     a    is   This";
             var result = _arraysAndStrings.ReverseWordsInString(arrange);
             Assert.AreEqual(expected, result);
         }
