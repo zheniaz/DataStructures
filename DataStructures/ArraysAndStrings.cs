@@ -709,5 +709,218 @@ namespace DataStructures
         }
 
         #endregion
+
+        #region 1..10 addition, subtraction, multiplication
+
+        // ---------------- Start Addition ----------------
+
+        public string AdditionStringNumbers(string num1, string num2)
+        {
+            if (string.IsNullOrEmpty(num1) || string.IsNullOrEmpty(num2))
+            {
+                throw new Exception("Bad deal");
+            }
+            StringBuilder sb = new StringBuilder();
+            int index1 = num1.Length - 1;
+            int index2 = num2.Length - 1;
+            int currentSum = 0;
+            int carry = 0;
+            while (index1 >= 0 || index2 >= 0)
+            {
+                if (carry > 0)
+                {
+                    currentSum += carry;
+                }
+                if (index1 >= 0)
+                {
+                    var temp = (int)char.GetNumericValue(num1[index1]);
+                    if (temp == -1)
+                    {
+                        throw new Exception("Bad deals");
+                    }
+                    currentSum += temp;
+                    index1--;
+                }
+                if (index2 >= 0)
+                {
+                    var temp = (int)char.GetNumericValue(num2[index2]);
+                    if (temp == -1)
+                    {
+                        throw new Exception("Bad deals");
+                    }
+                    currentSum += temp;
+                    index2--;
+                }
+                if (currentSum >= 10)
+                {
+                    sb.Insert(0, currentSum % 10);
+                    carry = currentSum / 10;
+                }
+                else
+                {
+                    sb.Insert(0, currentSum);
+                    carry = 0;
+                }
+                currentSum = 0;
+            }
+            if (carry > 0)
+            {
+                sb.Insert(0, carry);
+            }
+            return sb.ToString();
+        }
+
+        // ---------------- End Addition ----------------
+
+        // ---------------- Start Subtraction ----------------
+
+        public string SubtractionStringNumbers(string num1, string num2)
+        {
+            var result = "";
+            if (IsFirtsBigger(num2, num1))
+            {
+                result = "-" + Subtraction(num2, num1);
+            }
+            else
+            {
+                result = Subtraction(num1, num2);
+            }
+            return result;
+        }
+
+        public string Subtraction(string num1, string num2)
+        {
+            StringBuilder sb = new StringBuilder();
+            int index1 = num1.Length - 1;
+            int index2 = num2.Length - 1;
+            int carry = 0;
+            int currentSub = 0;
+            while (index1 >= 0 || index2 >= 0)
+            {
+                var c1 = (int)Char.GetNumericValue(num1[index1]);
+                var c2 = index2 >= 0 ? (int)Char.GetNumericValue(num2[index2]) : 0;
+                index1--;
+                index2--;
+                if (carry > 0)
+                {
+                    c1 -= carry;
+                    carry = 0;
+                }
+                if (c2 > c1)
+                {
+                    currentSub = 10 + c1 - c2;
+                    carry++;
+                }
+                else
+                {
+                    currentSub = c1 - c2;
+                }
+                sb.Insert(0, currentSub);
+                currentSub = 0;
+            }
+            if (sb[0] == '0')
+            {
+                while (sb[0] == '0')
+                {
+                    sb.Remove(0, 1);
+                }
+            }
+            return sb.ToString();
+        }
+
+        public bool IsFirtsBigger(string s, string t)
+        {
+            if (s.Length > t.Length)
+            {
+                return true;
+            }
+
+            if (s.Length < t.Length)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (s[i] > t[i])
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        // ---------------- End Subtraction ----------------
+
+        // ---------------- Start multiplication ----------------
+
+        public string Multiplication(string s, string t)
+        {
+            if (string.IsNullOrEmpty(s) || string.IsNullOrEmpty(t))
+            {
+                throw new Exception("Bed deal");
+            }
+            StringBuilder sb = new StringBuilder();
+            int indexS = s.Length - 1;
+            int indexT = t.Length - 1;
+            int currentValue = 0;
+            int carry = 0;
+            List<string> list = new List<string>();
+
+            for (indexS = s.Length - 1; indexS >= 0; indexS--)
+            {
+                sb.Append(GetZerosString(s.Length - 1 - indexS));
+                for (indexT = t.Length - 1; indexT >= 0; indexT--)
+                {
+                    currentValue = (int)Char.GetNumericValue(s[indexS]) * (int)Char.GetNumericValue(t[indexT]);
+                    if (carry > 0)
+                    {
+                        currentValue += carry;
+                    }
+                    if (currentValue >= 10)
+                    {
+                        carry = currentValue / 10;
+                        sb.Insert(0, currentValue % 10);
+                    }
+                    else
+                    {
+                        sb.Insert(0, currentValue);
+                        carry = 0;
+                    }
+                    currentValue = 0;
+                }
+                if (carry > 0)
+                {
+                    sb.Insert(0, carry);
+                    carry = 0;
+                }
+                list.Add(sb.ToString());
+                sb.Clear();
+            }
+            string current = list[0];
+
+            for (int i = 1; i < list.Count(); i++)
+            {
+                current = AdditionStringNumbers(current, list[i]);
+            }
+            return current;
+        }
+
+        public string GetZerosString(int count)
+        {
+            StringBuilder sb = new StringBuilder();
+            while(count > 0)
+            {
+                sb.Append('0');
+                count--;
+            }
+            return sb.ToString();
+        }
+
+        // ---------------- End multiplication ------------------
+
+
+
+        #endregion
     }
 }

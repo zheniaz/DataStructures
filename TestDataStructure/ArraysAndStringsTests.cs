@@ -2,6 +2,7 @@ using DataStructures;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
+using System.Text;
 //using DataStructures;
 namespace TestDataStructure
 {
@@ -913,6 +914,108 @@ namespace TestDataStructure
             int[] actual = _arraysAndStrings.GetUniqDigitsArray(arr);
             Assert.IsTrue(Enumerable.SequenceEqual(actual, expected));
         }
+
+        #endregion
+
+        #region 1..10 addition, subtraction, multiplication
+
+        // ---------------- Start Addition ----------------
+
+        [TestMethod]
+        public void AdditionStringNumbers1()
+        {
+            string s1 = "123";
+            string s2 = "129";
+            string expected = "252";
+            var result = _arraysAndStrings.AdditionStringNumbers(s1, s2);
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestMethod]
+        public void AdditionStringNumbers2()
+        {
+            string s1 = "12";
+            string s2 = "129";
+            string expected = "141";
+            var result = _arraysAndStrings.AdditionStringNumbers(s1, s2);
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestMethod]
+        public void AdditionStringNumbers3()
+        {
+            string s1 = "129";
+            string s2 = "12";
+            string expected = "141";
+            var result = _arraysAndStrings.AdditionStringNumbers(s1, s2);
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestMethod]
+        public void AdditionStringNumbers4()
+        {
+            string s1 = "123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890";
+            string s2 = "987654321876543187645318765431287654312398765432187654318764531876543128765431239876543218765431876453187654312876543123";
+            string expected = "1111111110888888866546553333321411111101411111111088888886654655333332141111110141111111108888888665465533333214111111013";
+            var result = _arraysAndStrings.AdditionStringNumbers(s1, s2);
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestMethod]
+        public void AdditionStringNumbers5()
+        {
+            string s1 = "123456789";
+            string s2 = "987654321";
+            string expected = "1111111110";
+            var result = _arraysAndStrings.AdditionStringNumbers(s1, s2);
+            Assert.AreEqual(expected, result);
+        }
+
+        // ---------------- End Addition ----------------
+
+        // ---------------- Start Subtraction ----------------
+
+        [TestMethod]
+        public void SubtractionStringNumbers1()
+        {
+            string s1 = "36";
+            string s2 = "24";
+            string expected = "12";
+            var result = _arraysAndStrings.SubtractionStringNumbers(s1, s2);
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestMethod]
+        public void SubtractionStringNumbers2()
+        {
+            string s1 = "361";
+            string s2 = "24";
+            string expected = "337";
+            var result = _arraysAndStrings.SubtractionStringNumbers(s1, s2);
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestMethod]
+        public void SubtractionStringNumbers3()
+        {
+            string s1 = "25";
+            string s2 = "26";
+            string expected = "-1";
+            var result = _arraysAndStrings.SubtractionStringNumbers(s1, s2);
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestMethod]
+        public void SubtractionStringNumbers4()
+        {
+            string s1 = "25";
+            string s2 = "260";
+            string expected = "-235";
+            var result = _arraysAndStrings.SubtractionStringNumbers(s1, s2);
+            Assert.AreEqual(expected, result);
+        }
+
+        // ---------------- End Subtraction ----------------
 
         #endregion
     }
