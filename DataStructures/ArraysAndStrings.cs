@@ -72,7 +72,7 @@ namespace DataStructures
 
         #endregion
 
-        #region 1.4 Palindrom Region
+        #region 1.4 Palindrom Permutation Region
 
         public bool IsPalindromPermutation(string str)
         {
@@ -247,23 +247,11 @@ namespace DataStructures
 
         public bool IsRotation(string s, string t)
         {
-            if (s == null && t == null || s == null || t == null)
+            if (string.IsNullOrEmpty(s) || string.IsNullOrEmpty(t))
             {
-                throw new NullReferenceException();
+                throw new Exception("Bad deals(:");
             }
-
-            if (s == "" && t == "")
-            {
-                throw new Exception("Strings are empty");
-            }
-
-            if (s.Length != t.Length)
-            {
-                return false;
-            }
-
-            string ss = s + s;
-            return ss.Contains(t);
+            return s.Length != t.Length ? false : (s + s).Contains(t);
         }
 
         #endregion
@@ -710,7 +698,7 @@ namespace DataStructures
 
         #endregion
 
-        #region 1..10 addition, subtraction, multiplication
+        #region 1..10 addition, subtraction, multiplication dividing up
 
         // ---------------- Start Addition ----------------
 
@@ -909,7 +897,7 @@ namespace DataStructures
         public string GetZerosString(int count)
         {
             StringBuilder sb = new StringBuilder();
-            while(count > 0)
+            while (count > 0)
             {
                 sb.Append('0');
                 count--;
@@ -919,8 +907,124 @@ namespace DataStructures
 
         // ---------------- End multiplication ------------------
 
+        // ---------------- START DEVIDING UP ------------------
 
+        #region DIVIDING
+
+        /// <summary>
+        /// 1. Find in the strDigit the smalest, that contains div (check if this step only for div < 10). For this step need startCurrentIndex: int, endCurrentIndex: int
+        /// 2. Multiply the div to find how many times the div is in the currentIntDigit
+        /// 3. Add to a result current
+        /// </summary>
+        /// <param name="strDigit"></param>
+        /// <param name="div"></param>
+        /// <returns></returns>
+        public string DividestringDigitByInt(string strDigit, int div)
+        {
+            char[] strDigitArr = strDigit.ToCharArray();
+            string result = string.Empty;
+            int startCurrentIndex = 0;
+            int endCurrentIndex = 0;
+            int currentMindDigit = 0;
+            string currentStrDigit = string.Empty;
+            // 1.
+            int currentIntDigit = 0;
+            for (endCurrentIndex = startCurrentIndex; endCurrentIndex < strDigitArr.Length; endCurrentIndex++)
+            {
+                currentStrDigit += strDigitArr[endCurrentIndex];
+                Int32.TryParse(currentStrDigit, out currentIntDigit);
+                if (currentIntDigit >= div)
+                {
+                    currentStrDigit = string.Empty;
+                    break;
+                }
+            }
+            startCurrentIndex++;
+            //endCurrentIndex = startCurrentIndex;
+
+            for (int i = 0; endCurrentIndex < strDigitArr.Length; i++)
+            {
+                if (i != 0)
+                {
+                    startCurrentIndex = endCurrentIndex;
+                    //endCurrentIndex = startCurrentIndex;
+                    currentIntDigit = 0;
+                    //currentIntDigit = currentMindDigit * 10 + int.Parse(strDigitArr[endCurrentIndex].ToString());
+                    //if (currentIntDigit < div)
+                    //{
+                    //    currentIntDigit = currentIntDigit * 10 + int.Parse(strDigitArr[++endCurrentIndex].ToString());
+                    //    result += "0";
+                    //}
+
+                    while (currentIntDigit < div && endCurrentIndex < strDigitArr.Length)
+                    {
+                        currentIntDigit = currentMindDigit * 10 + int.Parse(strDigitArr[endCurrentIndex].ToString());
+                        if (endCurrentIndex - startCurrentIndex > 1)
+                        {
+                            result += "0";
+                        }
+                        endCurrentIndex++;
+                    }
+
+                    //for (endCurrentIndex = startCurrentIndex; endCurrentIndex < strDigitArr.Length; endCurrentIndex++)
+                    //{
+                    //    currentStrDigit += strDigitArr[endCurrentIndex];
+                    //    Int32.TryParse(currentStrDigit, out currentIntDigit);
+                    //    if (endCurrentIndex - startCurrentIndex > 1)
+                    //    {
+                    //        result += "0";
+                    //    }
+                    //    if (currentIntDigit >= div)
+                    //    {
+                    //        currentStrDigit = string.Empty;
+                    //        break;
+                    //    }
+                    //}
+                }
+
+                // 2.
+                int currentMult = div;
+                while (currentMult + div <= currentIntDigit)
+                {
+                    currentMult += div;
+                }
+                // 3. 
+                result += currentMult / div;
+                currentMindDigit = currentIntDigit - currentMult;
+                //endCurrentIndex++;
+            }
+
+            return result;
+        }
+
+        #endregion DIVIDING
 
         #endregion
+
+        #region 1..11 START TWO SUMS REGION
+
+        public int[] TwoSums(int[] arr, int x)
+        {
+            int[] result = new int[2];
+            Hashtable ht = new Hashtable();
+            for (int i = 0; i < arr.Length; i++)
+            {
+                ht.Add(i, arr[i]);
+            }
+            for (int i = 0; i < arr.Length; i++)
+            {
+                int temp = x - arr[i];
+                if (ht.ContainsValue(temp))
+                {
+                    int value = (int)ht[i];
+                    result[0] = temp;
+                    result[1] = value;
+                }
+            }
+            return result;
+        }
+
+        #endregion END TWO SUMS REGION
+
     }
 }

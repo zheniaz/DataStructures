@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
 using System.Text;
-//using DataStructures;
+using DataStructures;
 namespace TestDataStructure
 {
     [TestClass]
@@ -148,7 +148,7 @@ namespace TestDataStructure
         public void IsPalindromTest6()
         {
             string palindrom = "";
-            var exception =  _arraysAndStrings.IsPalindromPermutation(palindrom);
+            var exception = _arraysAndStrings.IsPalindromPermutation(palindrom);
         }
 
         [TestMethod]
@@ -1018,5 +1018,39 @@ namespace TestDataStructure
         // ---------------- End Subtraction ----------------
 
         #endregion
+
+        #region 1..11 Two sums region. Check if array contains two digits that if sum will be equal x
+
+        [TestMethod]
+        public void TwoSumsTest1()
+        {
+            int x = 10;
+            int[] arr = { 1, 2, 3, 4, 5, 6 };
+            int[] expected = { 4, 6 };
+            var actual = _arraysAndStrings.TwoSums(arr, x);
+            Assert.IsTrue(expected.SequenceEqual(actual));
+        }
+
+        [TestMethod]
+        public void TwoSumsTest2()
+        {
+            int x = 10;
+            int[] arr = { 1, 2, 3, 4, 5, 5 };
+            int[] expected = { 5, 5 };
+            var actual = _arraysAndStrings.TwoSums(arr, x);
+            Assert.IsTrue(expected.SequenceEqual(actual));
+        }
+
+        [TestMethod]
+        public void TwoSumsTest3()
+        {
+            int x = 10;
+            int[] arr = { 1, 2, 3, 4, 13, 14 };
+            int[] expected = { 0, 0 };
+            var actual = _arraysAndStrings.TwoSums(arr, x);
+            Assert.IsTrue(expected.SequenceEqual(actual));
+        }
+
+        #endregion Two sums region. Check if array contains two digits that if sum will be equal x
     }
 }
