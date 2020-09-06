@@ -232,7 +232,7 @@ namespace DataStructures
             for (int i = 0; i < str.Length; i++)
             {
                 countConsecutive++;
-                if (i + 1 >= str.Length || str[i] != str[i + 1])
+                if (i + 1 == str.Length || str[i] != str[i + 1])
                 {
                     sb.Append(str[i]).Append(countConsecutive);
                     countConsecutive = 0;
